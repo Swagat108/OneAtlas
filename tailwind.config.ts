@@ -67,6 +67,18 @@ const config: Config = {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
+      fontSize: {
+        "2xs": ["0.75rem", { lineHeight: "1.1rem" }], // 12px
+        xs: ["0.84rem", { lineHeight: "1.3rem" }], // ~13.5px
+        sm: ["0.95rem", { lineHeight: "1.45rem" }], // ~15.2px
+        base: ["1.0625rem", { lineHeight: "1.65rem" }], // 17px
+        lg: ["1.2rem", { lineHeight: "1.75rem" }], // ~19.2px
+        xl: ["1.35rem", { lineHeight: "1.9rem" }], // ~21.6px
+        "2xl": ["1.65rem", { lineHeight: "2.15rem" }], // ~26.4px
+        "3xl": ["2.05rem", { lineHeight: "2.55rem" }], // ~32.8px
+        "4xl": ["2.6rem", { lineHeight: "3.1rem" }], // ~41.6px
+        "5xl": ["3.4rem", { lineHeight: "3.8rem" }], // ~54.4px
+      },
     },
   },
   plugins: [],

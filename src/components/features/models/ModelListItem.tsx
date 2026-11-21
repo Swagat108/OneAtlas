@@ -29,12 +29,12 @@ export function ModelListItem({ model }: ModelListItemProps) {
   };
 
   return (
-    <div className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-sm">
+    <div className="group flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-md">
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <Link
             href={`/labs/${model.lab.slug}`}
-            className="text-xs font-semibold text-primary hover:underline"
+            className="text-sm font-bold text-primary hover:underline"
           >
             {model.lab.name}
           </Link>
@@ -49,13 +49,13 @@ export function ModelListItem({ model }: ModelListItemProps) {
           )}
         </div>
 
-        <Link href={`/models/${model.slug}`} className="mt-1 block">
-          <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">
+        <Link href={`/models/${model.slug}`} className="mt-1.5 block">
+          <h3 className="text-lg font-extrabold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
             {model.name}
-            <ExternalLink className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+            <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
           </h3>
         </Link>
-        <p className="mt-0.5 text-xs text-muted-foreground line-clamp-1">
+        <p className="mt-1 text-sm text-muted-foreground line-clamp-1 leading-relaxed">
           {model.description}
         </p>
       </div>
@@ -63,21 +63,21 @@ export function ModelListItem({ model }: ModelListItemProps) {
       {/* Right Column: Specs & Actions */}
       <div className="flex items-center gap-6 self-end sm:self-center shrink-0">
         <div className="text-right">
-          <div className="text-xs font-bold text-foreground">
+          <div className="text-sm sm:text-base font-extrabold text-foreground">
             {model.pricing.minInputPricePerMillion !== null
               ? `${formatCurrency(model.pricing.minInputPricePerMillion)} / 1M`
               : "Free"}
           </div>
-          <div className="text-[11px] text-muted-foreground">
+          <div className="text-xs text-muted-foreground font-medium mt-0.5">
             {formatTokenCount(model.contextWindow)} ctx • {model.pricing.providerCount} host(s)
           </div>
         </div>
 
         <button
           onClick={toggleCompare}
-          className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium border transition-colors ${
+          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all ${
             inTray
-              ? "bg-primary text-primary-foreground border-primary"
+              ? "bg-primary text-primary-foreground border-primary shadow-xs"
               : "border-border text-muted-foreground hover:bg-accent hover:text-foreground"
           }`}
         >

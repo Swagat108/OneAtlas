@@ -56,45 +56,45 @@ export function ModelCard({ model }: ModelCardProps) {
   const arenaScore = model.benchmarkScores?.find((s) => s.slug === "arena-elo")?.score;
 
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg">
+    <div className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-xl">
       <div>
         {/* Header: Lab & Compare Action */}
         <div className="flex items-center justify-between gap-2">
           <Link
             href={`/labs/${model.lab.slug}`}
-            className="text-xs font-semibold text-primary hover:underline"
+            className="text-sm font-bold text-primary hover:underline tracking-tight"
           >
             {model.lab.name}
           </Link>
 
           <button
             onClick={toggleCompare}
-            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium border transition-colors ${
+            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold border transition-all ${
               inTray
-                ? "bg-primary text-primary-foreground border-primary"
+                ? "bg-primary text-primary-foreground border-primary shadow-xs"
                 : "border-border text-muted-foreground hover:bg-accent hover:text-foreground"
             }`}
           >
-            {inTray ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+            {inTray ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
             {inTray ? "Comparing" : "Compare"}
           </button>
         </div>
 
         {/* Model Title & Description */}
-        <div className="mt-2.5">
+        <div className="mt-3">
           <Link href={`/models/${model.slug}`} className="block">
-            <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">
+            <h3 className="text-lg font-extrabold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
               {model.name}
-              <ExternalLink className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+              <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
             </h3>
           </Link>
-          <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+          <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
             {model.description}
           </p>
         </div>
 
         {/* Badges: Type, Parameters, Arena Score */}
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap gap-2">
           <Badge variant="outline" size="sm">
             {model.modelType}
           </Badge>
@@ -104,8 +104,8 @@ export function ModelCard({ model }: ModelCardProps) {
             </Badge>
           )}
           {arenaScore && (
-            <Badge variant="success" size="sm" className="font-semibold">
-              <Zap className="h-3 w-3 mr-0.5" />
+            <Badge variant="success" size="sm" className="font-bold">
+              <Zap className="h-3.5 w-3.5 mr-1" />
               {arenaScore} Elo
             </Badge>
           )}
@@ -113,17 +113,17 @@ export function ModelCard({ model }: ModelCardProps) {
       </div>
 
       {/* Footer Specs & Pricing */}
-      <div className="mt-5 border-t border-border pt-4">
-        <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+      <div className="mt-6 border-t border-border pt-4">
+        <div className="grid grid-cols-2 gap-3 mb-3">
           <div>
-            <span className="text-muted-foreground block text-[11px]">Context Window</span>
-            <span className="font-semibold text-foreground">
+            <span className="text-muted-foreground block text-xs font-medium">Context Window</span>
+            <span className="text-sm font-bold text-foreground">
               {formatTokenCount(model.contextWindow)} tokens
             </span>
           </div>
           <div>
-            <span className="text-muted-foreground block text-[11px]">Input Price</span>
-            <span className="font-semibold text-foreground">
+            <span className="text-muted-foreground block text-xs font-medium">Input Price</span>
+            <span className="text-sm font-bold text-foreground">
               {model.pricing.minInputPricePerMillion !== null
                 ? `${formatCurrency(model.pricing.minInputPricePerMillion)} / 1M`
                 : "Free / Local"}
@@ -131,7 +131,7 @@ export function ModelCard({ model }: ModelCardProps) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-1 border-t border-border/40">
+        <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40 font-medium">
           <span>{model.pricing.providerCount} hosting provider(s)</span>
           <span className="capitalize">{model.license.toLowerCase().replace("_", " ")}</span>
         </div>
