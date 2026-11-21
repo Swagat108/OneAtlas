@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Cpu, Layers, Plus, Check, ExternalLink, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
@@ -62,9 +62,9 @@ export function ModelCard({ model }: ModelCardProps) {
         {/* Header: Logo, Lab & Compare Action */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <ModelLogo
-              labSlug={model.lab.slug}
-              modelSlug={model.slug}
+            <BrandLogo
+              logoUrl={model.lab.logoUrl}
+              slug={model.lab.slug}
               name={model.name}
               size="sm"
             />

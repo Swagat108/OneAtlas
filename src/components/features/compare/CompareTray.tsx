@@ -4,7 +4,7 @@ import React from "react";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 import { X, ArrowRight, Layers } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function CompareTray() {
   const { selectedModels, removeModel, clearTray, navigateToCompare } = useCompareTray();
@@ -25,9 +25,8 @@ export function CompareTray() {
               key={m.slug}
               className="flex items-center gap-2 rounded-xl border border-border bg-accent/70 px-2.5 py-1.5 text-xs sm:text-sm whitespace-nowrap font-semibold shadow-2xs"
             >
-              <ModelLogo
-                labSlug={m.labName?.toLowerCase()}
-                modelSlug={m.slug}
+              <BrandLogo
+                slug={m.slug}
                 name={m.name}
                 size="xs"
               />

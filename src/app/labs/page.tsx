@@ -4,7 +4,7 @@ import { Building2, Globe, ArrowRight, Sparkles } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { findAllLabs } from "@/repositories/lab.repo";
 
 export const revalidate = 60;
@@ -40,7 +40,7 @@ export default async function LabsPage() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <ModelLogo labSlug={lab.slug} name={lab.name} size="lg" />
+                  <BrandLogo logoUrl={lab.logoUrl} slug={lab.slug} name={lab.name} size="lg" />
                   <div className="text-right">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
                       {lab._count.models} models

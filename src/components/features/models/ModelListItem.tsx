@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Plus, Check, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 import { ModelSummary } from "./ModelCard";
@@ -32,9 +32,9 @@ export function ModelListItem({ model }: ModelListItemProps) {
   return (
     <div className="group flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-md">
       <div className="flex items-start gap-4 flex-1 min-w-0">
-        <ModelLogo
-          labSlug={model.lab.slug}
-          modelSlug={model.slug}
+        <BrandLogo
+          logoUrl={model.lab.logoUrl}
+          slug={model.lab.slug}
           name={model.name}
           size="md"
           className="mt-0.5"

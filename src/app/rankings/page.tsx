@@ -10,7 +10,7 @@ import { CompareTray } from "@/components/features/compare/CompareTray";
 import { Badge } from "@/components/ui/Badge";
 import { ScoreBar } from "@/components/ui/ScoreBar";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 import { useRankings } from "@/hooks/use-rankings";
 import { useCompareTray } from "@/hooks/use-compare-tray";
@@ -214,9 +214,9 @@ function RankingsContent() {
                         {/* Model & Lab */}
                         <td className="p-4">
                           <div className="flex items-center gap-3">
-                            <ModelLogo
-                              labSlug={item.model.lab?.slug}
-                              modelSlug={item.model.slug}
+                            <BrandLogo
+                              logoUrl={item.model.lab?.logoUrl}
+                              slug={item.model.lab?.slug}
                               name={item.model.name}
                               size="sm"
                             />

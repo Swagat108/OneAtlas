@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Compass, Building2, Server, X, ArrowRight } from "lucide-react";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { useSearch } from "@/hooks/use-search";
 import { cn } from "@/lib/utils";
 
@@ -132,9 +132,9 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <ModelLogo
-                      labSlug={m.labSlug || m.lab?.toLowerCase()}
-                      modelSlug={m.slug}
+                    <BrandLogo
+                      logoUrl={m.logoUrl}
+                      slug={m.labSlug || m.slug}
                       name={m.name}
                       size="xs"
                     />
@@ -161,8 +161,9 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <ModelLogo
-                      labSlug={l.slug}
+                    <BrandLogo
+                      logoUrl={l.logoUrl}
+                      slug={l.slug}
                       name={l.name}
                       size="xs"
                     />
@@ -189,8 +190,9 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <ModelLogo
-                      providerSlug={p.slug}
+                    <BrandLogo
+                      logoUrl={p.logoUrl}
+                      slug={p.slug}
                       name={p.name}
                       size="xs"
                     />

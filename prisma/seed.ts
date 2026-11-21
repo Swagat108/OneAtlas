@@ -72,6 +72,7 @@ async function main() {
         website: prov.website,
         regions: prov.regions,
         description: prov.description,
+        logoUrl: prov.logoUrl,
       },
       create: {
         slug: prov.slug,
@@ -79,6 +80,7 @@ async function main() {
         website: prov.website,
         regions: prov.regions,
         description: prov.description,
+        logoUrl: prov.logoUrl,
       },
     });
     providerMap.set(prov.slug, record.id);

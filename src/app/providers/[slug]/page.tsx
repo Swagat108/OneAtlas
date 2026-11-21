@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
 import { Badge } from "@/components/ui/Badge";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { findProviderBySlug } from "@/repositories/provider.repo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 
@@ -43,7 +43,7 @@ export default async function ProviderDetailPage({
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-border">
             <div className="flex items-center gap-5">
-              <ModelLogo providerSlug={provider.slug} name={provider.name} size="xl" className="shadow-md" />
+              <BrandLogo logoUrl={provider.logoUrl} slug={provider.slug} name={provider.name} size="xl" className="shadow-md" />
               <div>
                 <span className="text-xs font-semibold text-primary block mb-1">
                   Regions: {provider.regions.join(", ")}
@@ -105,9 +105,9 @@ export default async function ProviderDetailPage({
                   <tr key={mp.id} className="hover:bg-muted/20">
                     <td className="p-4 font-bold text-foreground">
                       <div className="flex items-center gap-2.5">
-                        <ModelLogo
-                          labSlug={mp.model.lab?.slug}
-                          modelSlug={mp.model.slug}
+                        <BrandLogo
+                          logoUrl={mp.model.lab?.logoUrl}
+                          slug={mp.model.lab?.slug}
                           name={mp.model.name}
                           size="xs"
                         />

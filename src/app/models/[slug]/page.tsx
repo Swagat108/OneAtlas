@@ -24,7 +24,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ScoreBar } from "@/components/ui/ScoreBar";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount, formatDate } from "@/lib/utils";
 import { useModelDetail } from "@/hooks/use-model-detail";
 import { useCompareTray } from "@/hooks/use-compare-tray";
@@ -79,9 +79,9 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
             {/* Model Header */}
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-border pb-8">
               <div className="flex items-start gap-5">
-                <ModelLogo
-                  labSlug={model.lab.slug}
-                  modelSlug={model.slug}
+                <BrandLogo
+                  logoUrl={model.lab.logoUrl}
+                  slug={model.lab.slug}
                   name={model.name}
                   size="xl"
                   className="mt-1 shadow-md"
@@ -269,8 +269,9 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                             href={`/providers/${p.provider.slug}`}
                             className="hover:text-primary transition-colors inline-flex items-center gap-2"
                           >
-                            <ModelLogo
-                              providerSlug={p.provider.slug}
+                            <BrandLogo
+                              logoUrl={p.provider.logoUrl}
+                              slug={p.provider.slug}
                               name={p.provider.name}
                               size="xs"
                             />

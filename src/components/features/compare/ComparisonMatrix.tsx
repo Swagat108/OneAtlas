@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Check, Trophy, X, Share2, Copy, CheckCheck, Sparkles, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { ModelLogo } from "@/components/ui/ModelLogo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount, formatScore } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
@@ -70,9 +70,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
                 <th key={m.slug} className="p-4 font-bold min-w-[16rem] align-top">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5">
-                      <ModelLogo
-                        labSlug={m.lab?.slug}
-                        modelSlug={m.slug}
+                      <BrandLogo
+                        logoUrl={m.lab?.logoUrl}
+                        slug={m.lab?.slug}
                         name={m.name}
                         size="md"
                         className="mt-0.5"
