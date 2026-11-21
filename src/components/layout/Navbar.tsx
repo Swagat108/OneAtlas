@@ -40,8 +40,8 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-18 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-10">
+      <header className="sticky top-2 sm:top-2.5 z-40 w-full px-4 sm:px-6 lg:px-10 transition-all">
+        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8 rounded-2xl border border-border/80 bg-background/90 backdrop-blur-md shadow-md">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3 group">
@@ -122,7 +122,7 @@ export function Navbar() {
 
         {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-b border-border bg-card p-4 space-y-2">
+          <div className="lg:hidden mx-auto max-w-[1600px] mt-2 rounded-2xl border border-border bg-card/95 backdrop-blur-md p-4 space-y-2 shadow-xl animate-in fade-in slide-in-from-top-2">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
               const Icon = link.icon;
