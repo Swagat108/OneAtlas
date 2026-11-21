@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ScoreBar } from "@/components/ui/ScoreBar";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { ModelLogo } from "@/components/ui/ModelLogo";
 import { formatCurrency, formatTokenCount, formatDate } from "@/lib/utils";
 import { useModelDetail } from "@/hooks/use-model-detail";
 import { useCompareTray } from "@/hooks/use-compare-tray";
@@ -77,27 +78,35 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
           <div className="space-y-10">
             {/* Model Header */}
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-border pb-8">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Link
-                    href={`/labs/${model.lab.slug}`}
-                    className="text-sm font-semibold text-primary hover:underline"
-                  >
-                    {model.lab.name}
-                  </Link>
-                  <span className="text-muted-foreground">•</span>
-                  <span className="text-xs text-muted-foreground">
-                    Released {formatDate(model.releaseDate)}
-                  </span>
-                </div>
+              <div className="flex items-start gap-5">
+                <ModelLogo
+                  labSlug={model.lab.slug}
+                  modelSlug={model.slug}
+                  name={model.name}
+                  size="xl"
+                  className="mt-1 shadow-md"
+                />
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/labs/${model.lab.slug}`}
+                      className="text-sm font-semibold text-primary hover:underline"
+                    >
+                      {model.lab.name}
+                    </Link>
+                    <span className="text-muted-foreground">•</span>
+                    <span className="text-xs text-muted-foreground">
+                      Released {formatDate(model.releaseDate)}
+                    </span>
+                  </div>
 
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                  {model.name}
-                </h1>
+                  <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                    {model.name}
+                  </h1>
 
-                <p className="max-w-3xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {model.description}
-                </p>
+                  <p className="max-w-3xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {model.description}
+                  </p>
 
                 {/* Modalities & Capabilities Pills */}
                 <div className="flex flex-wrap gap-2 pt-2">
@@ -119,8 +128,9 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                   )}
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons */}
+            {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 shrink-0">
                 <Button
                   variant={inTray ? "secondary" : "primary"}
@@ -257,11 +267,16 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                         <td className="p-4 font-semibold text-foreground">
                           <Link
                             href={`/providers/${p.provider.slug}`}
-                            className="hover:text-primary transition-colors flex items-center gap-1.5"
+                            className="hover:text-primary transition-colors inline-flex items-center gap-2"
                           >
-                            {p.provider.name}
+                            <ModelLogo
+                              providerSlug={p.provider.slug}
+                              name={p.provider.name}
+                              size="xs"
+                            />
+                            <span>{p.provider.name}</span>
                             {idx === 0 && (
-                              <Badge variant="success" size="sm" className="ml-1.5">
+                              <Badge variant="success" size="sm" className="ml-1">
                                 Best Price
                               </Badge>
                             )}

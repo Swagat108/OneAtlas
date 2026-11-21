@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
 import { Badge } from "@/components/ui/Badge";
+import { ModelLogo } from "@/components/ui/ModelLogo";
 import { findProviderBySlug } from "@/repositories/provider.repo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 
@@ -40,12 +41,15 @@ export default async function ProviderDetailPage({
 
         {/* Profile Card */}
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
-            <div>
-              <span className="text-xs font-semibold text-primary block mb-1">
-                Regions: {provider.regions.join(", ")}
-              </span>
-              <h1 className="text-3xl font-extrabold tracking-tight">{provider.name}</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-border">
+            <div className="flex items-center gap-5">
+              <ModelLogo providerSlug={provider.slug} name={provider.name} size="xl" className="shadow-md" />
+              <div>
+                <span className="text-xs font-semibold text-primary block mb-1">
+                  Regions: {provider.regions.join(", ")}
+                </span>
+                <h1 className="text-3xl font-extrabold tracking-tight">{provider.name}</h1>
+              </div>
             </div>
 
             {provider.website && (
@@ -100,13 +104,21 @@ export default async function ProviderDetailPage({
                 {provider.models.map((mp) => (
                   <tr key={mp.id} className="hover:bg-muted/20">
                     <td className="p-4 font-bold text-foreground">
-                      <Link
-                        href={`/models/${mp.model.slug}`}
-                        className="hover:text-primary transition-colors inline-flex items-center gap-1"
-                      >
-                        {mp.model.name}
-                        <ExternalLink className="h-3 w-3 text-muted-foreground" />
-                      </Link>
+                      <div className="flex items-center gap-2.5">
+                        <ModelLogo
+                          labSlug={mp.model.lab?.slug}
+                          modelSlug={mp.model.slug}
+                          name={mp.model.name}
+                          size="xs"
+                        />
+                        <Link
+                          href={`/models/${mp.model.slug}`}
+                          className="hover:text-primary transition-colors inline-flex items-center gap-1"
+                        >
+                          {mp.model.name}
+                          <ExternalLink className="h-3 w-3 text-muted-foreground" />
+                        </Link>
+                      </div>
                     </td>
                     <td className="p-4 text-primary font-medium">
                       {mp.model.lab.name}

@@ -72,6 +72,7 @@ export async function searchGlobal(q: string, limit = 5) {
       type: m.modelType,
       context: m.contextWindow,
       lab: m.lab.name,
+      labSlug: m.lab.slug,
       url: `/models/${m.slug}`,
     })),
     labs: labs.map((l) => ({

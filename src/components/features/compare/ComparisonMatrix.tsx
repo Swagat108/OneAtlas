@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Check, Trophy, X, Share2, Copy, CheckCheck, Sparkles, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { ModelLogo } from "@/components/ui/ModelLogo";
 import { formatCurrency, formatTokenCount, formatScore } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
@@ -67,18 +68,27 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
               </th>
               {models.map((m) => (
                 <th key={m.slug} className="p-4 font-bold min-w-[16rem] align-top">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-xs text-primary font-medium block">
-                        {m.lab.name}
-                      </span>
-                      <Link
-                        href={`/models/${m.slug}`}
-                        className="text-base text-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
-                      >
-                        {m.name}
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </Link>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-2.5">
+                      <ModelLogo
+                        labSlug={m.lab?.slug}
+                        modelSlug={m.slug}
+                        name={m.name}
+                        size="md"
+                        className="mt-0.5"
+                      />
+                      <div>
+                        <span className="text-xs text-primary font-medium block">
+                          {m.lab.name}
+                        </span>
+                        <Link
+                          href={`/models/${m.slug}`}
+                          className="text-base text-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+                        >
+                          {m.name}
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </Link>
+                      </div>
                     </div>
                     <button
                       onClick={() => removeModel(m.slug)}

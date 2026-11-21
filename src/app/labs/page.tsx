@@ -4,6 +4,7 @@ import { Building2, Globe, ArrowRight, Sparkles } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
+import { ModelLogo } from "@/components/ui/ModelLogo";
 import { findAllLabs } from "@/repositories/lab.repo";
 
 export const revalidate = 60;
@@ -38,13 +39,16 @@ export default async function LabsPage() {
               className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-lg"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-semibold text-muted-foreground">
-                    {lab.country} • Founded {lab.foundedYear}
-                  </span>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary">
-                    {lab._count.models} models
-                  </span>
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  <ModelLogo labSlug={lab.slug} name={lab.name} size="lg" />
+                  <div className="text-right">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                      {lab._count.models} models
+                    </span>
+                    <span className="text-[11px] font-medium text-muted-foreground block mt-1">
+                      {lab.country} • {lab.foundedYear}
+                    </span>
+                  </div>
                 </div>
 
                 <Link href={`/labs/${lab.slug}`} className="block">

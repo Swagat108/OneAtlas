@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
 import { Badge } from "@/components/ui/Badge";
+import { ModelLogo } from "@/components/ui/ModelLogo";
 import { findLabBySlug } from "@/repositories/lab.repo";
 import { formatDate, formatTokenCount, formatCurrency } from "@/lib/utils";
 
@@ -40,12 +41,15 @@ export default async function LabDetailPage({
 
         {/* Lab Profile Header */}
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
-            <div>
-              <span className="text-xs font-semibold text-primary block mb-1">
-                {lab.country} • Founded {lab.foundedYear}
-              </span>
-              <h1 className="text-3xl font-extrabold tracking-tight">{lab.name}</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-border">
+            <div className="flex items-center gap-5">
+              <ModelLogo labSlug={lab.slug} name={lab.name} size="xl" className="shadow-md" />
+              <div>
+                <span className="text-xs font-semibold text-primary block mb-1">
+                  {lab.country} • Founded {lab.foundedYear}
+                </span>
+                <h1 className="text-3xl font-extrabold tracking-tight">{lab.name}</h1>
+              </div>
             </div>
 
             {lab.website && (
@@ -95,7 +99,13 @@ export default async function LabDetailPage({
 
                   <div className="rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-md">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <ModelLogo
+                          labSlug={lab.slug}
+                          modelSlug={model.slug}
+                          name={model.name}
+                          size="sm"
+                        />
                         <Link href={`/models/${model.slug}`}>
                           <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
                             {model.name}
