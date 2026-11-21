@@ -27,6 +27,9 @@ export function Footer() {
             <Link href="/rankings" className="hover:text-foreground transition-colors">
               Leaderboards
             </Link>
+            <Link href="/benchmarks" className="hover:text-foreground transition-colors">
+              Benchmarks
+            </Link>
             <Link href="/labs" className="hover:text-foreground transition-colors">
               AI Labs
             </Link>
