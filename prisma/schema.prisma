@@ -1,0 +1,219 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ModelType {
+  LLM
+  IMAGE
+  EMBEDDING
+  AUDIO
+  VIDEO
+  MULTIMODAL
+}
+
+enum LicenseType {
+  OPEN_SOURCE
+  PROPRIETARY
+  OPEN_WEIGHTS
+}
+
+enum ModelStatus {
+  ACTIVE
+  PREVIEW
+  DEPRECATED
+}
+
+enum BenchmarkCategory {
+  REASONING
+  CODING
+  MATH
+  KNOWLEDGE
+  MULTIMODAL
+  AGENTIC
+  SAFETY
+}
+
+model Lab {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String   @db.Text
+  website     String
+  logoUrl     String?
+  country     String
+  foundedYear Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  models      Model[]
+
+  @@index([slug])
+}
+
+model Model {
+  id               String       @id @default(cuid())
+  slug             String       @unique
+  name             String
+  labId            String
+  lab              Lab          @relation(fields: [labId], references: [id], onDelete: Restrict)
+  description      String       @db.Text
+  modelType        ModelType    @default(LLM)
+  releaseDate      DateTime
+  contextWindow    Int          // Total token context window (e.g. 128000, 1000000)
+  maxOutputTokens  Int          // Maximum output tokens (e.g. 4096, 16384)
+  parameterCount   String?      // e.g. "70B", "405B", "MoE 8x7B" (null for proprietary models)
+  license          LicenseType  @default(PROPRIETARY)
+  status           ModelStatus  @default(ACTIVE)
+  architecture     String?      // e.g. "Dense Transformer", "Mixture of Experts"
+  huggingFaceUrl   String?
+  paperUrl         String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  // Modalities & Capabilities
+  inputModalities  ModelInputModality[]
+  outputModalities ModelOutputModality[]
+  capabilities     ModelCapability[]
+
+  // Providers & Benchmarks
+  providers        ModelProvider[]
+  benchmarkScores  BenchmarkScore[]
+
+  @@index([slug])
+  @@index([labId])
+  @@index([releaseDate])
+  @@index([contextWindow])
+  @@index([modelType])
+  @@index([license])
+}
+
+model Modality {
+  id           String                @id @default(cuid())
+  slug         String                @unique // text, image, audio, video, code, file
+  name         String
+  description  String?
+  
+  inputModels  ModelInputModality[]
+  outputModels ModelOutputModality[]
+
+  @@index([slug])
+}
+
+model ModelInputModality {
+  modelId    String
+  modalityId String
+  model      Model    @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  modality   Modality @relation(fields: [modalityId], references: [id], onDelete: Cascade)
+
+  @@id([modelId, modalityId])
+}
+
+model ModelOutputModality {
+  modelId    String
+  modalityId String
+  model      Model    @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  modality   Modality @relation(fields: [modalityId], references: [id], onDelete: Cascade)
+
+  @@id([modelId, modalityId])
+}
+
+model Capability {
+  id          String            @id @default(cuid())
+  slug        String            @unique // function_calling, json_mode, reasoning, streaming, vision, code_interpreter
+  name        String
+  description String?
+
+  models      ModelCapability[]
+
+  @@index([slug])
+}
+
+model ModelCapability {
+  modelId      String
+  capabilityId String
+  model        Model      @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  capability   Capability @relation(fields: [capabilityId], references: [id], onDelete: Cascade)
+
+  @@id([modelId, capabilityId])
+}
+
+model Provider {
+  id          String          @id @default(cuid())
+  slug        String          @unique // openai, anthropic, groq, together, fireworks, aws_bedrock, azure
+  name        String
+  website     String
+  regions     String[]        // e.g. ["us-east-1", "eu-west-1", "global"]
+  description String          @db.Text
+  logoUrl     String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  models      ModelProvider[]
+
+  @@index([slug])
+}
+
+model ModelProvider {
+  id                    String   @id @default(cuid())
+  modelId               String
+  providerId            String
+  model                 Model    @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  provider              Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  inputPricePerMillion  Decimal  @db.Decimal(10, 4) // USD per 1M input tokens
+  outputPricePerMillion Decimal  @db.Decimal(10, 4) // USD per 1M output tokens
+  currency              String   @default("USD")
+  contextWindowOverride Int?
+  latencyMs             Float?   // Median TTFT in milliseconds
+  throughputTps         Float?   // Tokens per second
+  isAvailable           Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@unique([modelId, providerId])
+  @@index([modelId])
+  @@index([providerId])
+  @@index([inputPricePerMillion])
+  @@index([outputPricePerMillion])
+}
+
+model Benchmark {
+  id             String            @id @default(cuid())
+  slug           String            @unique // mmlu_pro, gsm8k, humaneval, math, arena_elo, etc.
+  name           String
+  category       BenchmarkCategory
+  description    String            @db.Text
+  maxScore       Float             // e.g. 100.0 or 1500.0 (Arena Elo)
+  higherIsBetter Boolean           @default(true)
+
+  scores         BenchmarkScore[]
+
+  @@index([slug])
+  @@index([category])
+}
+
+model BenchmarkScore {
+  id          String    @id @default(cuid())
+  modelId     String
+  benchmarkId String
+  score       Float
+  source      String    // e.g. "Official Paper", "LMSYS Arena"
+  measuredAt  DateTime  @default(now())
+
+  model       Model     @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  benchmark   Benchmark @relation(fields: [benchmarkId], references: [id], onDelete: Cascade)
+
+  @@unique([modelId, benchmarkId])
+  @@index([modelId])
+  @@index([benchmarkId])
+  @@index([score])
+}
