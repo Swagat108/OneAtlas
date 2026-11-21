@@ -140,7 +140,7 @@ export default function HomePage() {
         </section>
 
         {/* Featured Models Spotlight */}
-        <section className="py-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="py-20 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <Badge variant="brand" size="md" className="mb-2.5">
@@ -200,7 +200,7 @@ export default function HomePage() {
 
         {/* Feature Grid: Discovery, Compare, Leaderboards */}
         <section className="py-20 bg-muted/30 border-y border-border/60">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
             <div className="text-center max-w-2xl mx-auto mb-14">
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Engineered for Modern AI Builders
