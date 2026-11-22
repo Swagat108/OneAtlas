@@ -160,7 +160,7 @@ erDiagram
 
 ### 2. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/OneAtlas.git
+git clone https://github.com/Swagat108/OneAtlas.git
 cd OneAtlas
 npm install
 ```
