@@ -93,7 +93,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-border text-xs">
+          <tbody className="divide-y divide-border text-sm">
             {/* Input Pricing */}
             <tr className="hover:bg-muted/20">
               <td className="p-4 font-medium text-muted-foreground">Min Input Price (1M tokens)</td>

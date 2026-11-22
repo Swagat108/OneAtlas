@@ -117,3 +117,20 @@ This document tracks all significant architectural decisions, trade-offs, ration
 - **Trade-offs:**
   - *Pros:* Prevents abusive scraping without impacting legitimate developers.
   - *Cons:* Requires an external Redis instance.
+
+---
+
+## ADR 009: Ergonomic Typography Scale & Accessible Design Tokens
+
+- **Date:** 2026-11-21
+- **Status:** Accepted
+- **Context:**
+  Dense developer tools like OpenRouter often use ultra-compact 10–12px typography that can cause eye fatigue and poor readability on high-DPI screens or mobile devices.
+- **Decision:**
+  1. Set the root HTML base font size to `16.5px` and extend the Tailwind font size scale (`xs: 13.5px`, `sm: 15.2px`, `base: 17px`, `lg: 19.2px`, `xl: 21.6px`, `2xl: 26.4px`, `3xl: 32.8px`).
+  2. Increase touch target heights on all buttons (`h-10` to `h-12`) and inputs (`py-2.5` to `py-3`).
+  3. Enforce high-contrast semantic badges with clear font weights (`font-semibold` to `font-bold`) and generous badge padding.
+  4. Ensure all table cells, comparisons, and leaderboard score bars provide ample breathing room without sacrificing data density.
+- **Trade-offs:**
+  - *Pros:* Significantly superior readability, lower cognitive strain, accessible touch targets, and a polished, premium aesthetic.
+  - *Cons:* Slightly fewer cards visible in a single viewport before scrolling.

@@ -57,27 +57,27 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center border-b border-border px-4 py-3">
-          <Search className="h-5 w-5 text-muted-foreground mr-3" />
+        <div className="flex items-center border-b border-border px-5 py-4">
+          <Search className="h-5 w-5 text-muted-foreground mr-3 shrink-0" />
           <input
             type="text"
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search AI models, labs, providers (e.g. GPT-4o, Groq, Meta)..."
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            className="flex-1 bg-transparent text-base font-medium outline-none placeholder:text-muted-foreground"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground mr-2"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4.5 w-4.5" />
             </button>
           )}
           <button
             onClick={onClose}
-            className="ml-2 text-xs border border-border rounded px-1.5 py-0.5 text-muted-foreground"
+            className="text-xs border border-border rounded-md px-2 py-1 text-muted-foreground font-mono"
           >
             ESC
           </button>

@@ -83,82 +83,82 @@ export default function HomePage() {
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.15),rgba(255,255,255,0))]" />
 
           <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary mb-6 animate-in fade-in">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs sm:text-sm font-bold text-primary mb-6 animate-in fade-in">
+              <Sparkles className="h-4 w-4" />
               <span>The Independent AI Model Intelligence Engine</span>
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
               Discover, Compare & Evaluate <br />
               <span className="bg-gradient-to-r from-primary via-brand-purple to-brand-cyan bg-clip-text text-transparent">
                 Frontier AI Models
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground">
+            <p className="mt-6 max-w-3xl mx-auto text-base sm:text-xl text-muted-foreground leading-relaxed">
               Real-time benchmarks, multi-provider token pricing, context limits, and latency metrics across OpenAI, Anthropic, Meta, DeepSeek, Google, and Mistral.
             </p>
 
             {/* Quick Search Bar */}
-            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-xl mx-auto">
-              <div className="relative flex items-center shadow-lg rounded-2xl overflow-hidden border border-border bg-card/90 backdrop-blur-md p-1.5 focus-within:border-primary transition-all">
+            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-2xl mx-auto">
+              <div className="relative flex items-center shadow-xl rounded-2xl overflow-hidden border border-border bg-card/95 backdrop-blur-md p-2 focus-within:border-primary transition-all">
                 <Search className="h-5 w-5 text-muted-foreground ml-3 shrink-0" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search 40+ models, labs, or benchmarks (e.g. Claude 3.5, Groq, SWE-bench)..."
-                  className="w-full bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                  placeholder="Search 45+ models, labs, or benchmarks (e.g. Claude 3.5, Groq, SWE-bench)..."
+                  className="w-full bg-transparent px-3.5 py-2.5 text-sm sm:text-base outline-none placeholder:text-muted-foreground"
                 />
-                <Button type="submit" size="sm" className="shrink-0 gap-1 rounded-xl">
+                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl">
                   Explore
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
             </form>
 
             {/* Stats Counter Strip */}
-            <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 max-w-3xl mx-auto">
-              <div className="rounded-xl border border-border/80 bg-card/40 p-4">
-                <div className="text-2xl font-black text-foreground">40+</div>
-                <div className="text-xs text-muted-foreground mt-0.5">Frontier Models</div>
+            <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 max-w-4xl mx-auto">
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-5 shadow-xs">
+                <div className="text-3xl sm:text-4xl font-black text-foreground">45+</div>
+                <div className="text-sm font-medium text-muted-foreground mt-1">Frontier Models</div>
               </div>
-              <div className="rounded-xl border border-border/80 bg-card/40 p-4">
-                <div className="text-2xl font-black text-foreground">9+</div>
-                <div className="text-xs text-muted-foreground mt-0.5">Top AI Labs</div>
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-5 shadow-xs">
+                <div className="text-3xl sm:text-4xl font-black text-foreground">9+</div>
+                <div className="text-sm font-medium text-muted-foreground mt-1">Top AI Labs</div>
               </div>
-              <div className="rounded-xl border border-border/80 bg-card/40 p-4">
-                <div className="text-2xl font-black text-foreground">9+</div>
-                <div className="text-xs text-muted-foreground mt-0.5">Cloud Hosting APIs</div>
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-5 shadow-xs">
+                <div className="text-3xl sm:text-4xl font-black text-foreground">9+</div>
+                <div className="text-sm font-medium text-muted-foreground mt-1">Cloud Hosting APIs</div>
               </div>
-              <div className="rounded-xl border border-border/80 bg-card/40 p-4">
-                <div className="text-2xl font-black text-foreground">10+</div>
-                <div className="text-xs text-muted-foreground mt-0.5">Verified Benchmarks</div>
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-5 shadow-xs">
+                <div className="text-3xl sm:text-4xl font-black text-foreground">10+</div>
+                <div className="text-sm font-medium text-muted-foreground mt-1">Verified Benchmarks</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Featured Models Spotlight */}
-        <section className="py-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <section className="py-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <Badge variant="brand" size="sm" className="mb-2">
+              <Badge variant="brand" size="md" className="mb-2.5">
                 Curated Selection
               </Badge>
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Frontier Model Spotlight
               </h2>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-base text-muted-foreground mt-2">
                 Top performing models across reasoning, software development, and open-weights efficiency.
               </p>
             </div>
             <Link
               href="/models"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-2 text-base font-bold text-primary hover:underline"
             >
-              Browse all 40+ models
-              <ArrowRight className="h-4 w-4" />
+              Browse all 45+ models
+              <ArrowRight className="h-4.5 w-4.5" />
             </Link>
           </div>
 
@@ -166,31 +166,31 @@ export default function HomePage() {
             {featuredModels.map((item) => (
               <div
                 key={item.slug}
-                className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
+                className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-xl"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-xs font-semibold text-primary">{item.lab}</span>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-sm font-bold text-primary">{item.lab}</span>
                     <Badge variant="success" size="sm">
                       {item.badge}
                     </Badge>
                   </div>
                   <Link href={`/models/${item.slug}`} className="block">
-                    <h3 className="text-lg font-bold group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-extrabold group-hover:text-primary transition-colors">
                       {item.name}
                     </h3>
                   </Link>
-                  <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{item.desc}</p>
+                  <p className="mt-2 text-sm text-muted-foreground line-clamp-2 leading-relaxed">{item.desc}</p>
                 </div>
 
-                <div className="mt-6 border-t border-border pt-4 flex items-center justify-between text-xs">
+                <div className="mt-6 border-t border-border pt-4 flex items-center justify-between text-sm">
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Context</span>
-                    <span className="font-semibold">{item.context}</span>
+                    <span className="text-muted-foreground block text-xs font-medium">Context</span>
+                    <span className="font-bold text-foreground">{item.context}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-muted-foreground block text-[11px]">Price</span>
-                    <span className="font-semibold text-primary">{item.price}</span>
+                    <span className="text-muted-foreground block text-xs font-medium">Price</span>
+                    <span className="font-bold text-primary">{item.price}</span>
                   </div>
                 </div>
               </div>
@@ -199,63 +199,63 @@ export default function HomePage() {
         </section>
 
         {/* Feature Grid: Discovery, Compare, Leaderboards */}
-        <section className="py-16 bg-muted/30 border-y border-border/60">
+        <section className="py-20 bg-muted/30 border-y border-border/60">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Engineered for Modern AI Builders
               </h2>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-base text-muted-foreground mt-3">
                 Everything you need to select the optimal model provider without trial and error.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4">
-                  <Compass className="h-5 w-5" />
+              <div className="rounded-2xl border border-border bg-card p-7 shadow-xs hover:border-primary/40 transition-all">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-5">
+                  <Compass className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold mb-2">Faceted Discovery</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-2.5">Faceted Discovery</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Filter by context size (up to 2M tokens), capability flags (function calling, JSON mode, vision), license type, and price range.
                 </p>
                 <Link
                   href="/models"
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
-                  Explore Catalog <ArrowRight className="h-3.5 w-3.5" />
+                  Explore Catalog <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
 
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-purple/10 text-brand-purple mb-4">
-                  <Layers className="h-5 w-5" />
+              <div className="rounded-2xl border border-border bg-card p-7 shadow-xs hover:border-primary/40 transition-all">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-purple/10 text-brand-purple mb-5">
+                  <Layers className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold mb-2">Side-by-Side Matrix</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-2.5">Side-by-Side Matrix</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Compare up to 4 models simultaneously. Automatic detection of the cheapest provider, fastest latency, and highest benchmark scores.
                 </p>
                 <Link
-                  href="/compare?models=gpt-4o,claude-3-5-sonnet,deepseek-v3"
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  href="/compare?slugs=gpt-4o,claude-3-5-sonnet,deepseek-v3"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
-                  Try Sample Comparison <ArrowRight className="h-3.5 w-3.5" />
+                  Try Sample Comparison <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
 
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-emerald/10 text-brand-emerald mb-4">
-                  <Trophy className="h-5 w-5" />
+              <div className="rounded-2xl border border-border bg-card p-7 shadow-xs hover:border-primary/40 transition-all">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-500 mb-5">
+                  <Trophy className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold mb-2">Benchmark Leaderboard</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Comprehensive rankings across MMLU-Pro, SWE-bench Verified, HumanEval, and LMSYS Chatbot Arena Elo.
+                <h3 className="text-xl font-bold mb-2.5">Benchmark Leaderboard</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Normalized rankings across MMLU-Pro, SWE-bench, HumanEval, and LMSYS Chatbot Arena with multi-provider price overlays.
                 </p>
                 <Link
                   href="/rankings"
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
-                  View Rankings <ArrowRight className="h-3.5 w-3.5" />
+                  View Rankings <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

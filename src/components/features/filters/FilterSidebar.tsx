@@ -59,19 +59,19 @@ export function FilterSidebar({
   );
 
   return (
-    <aside className="w-full space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-border">
-        <div className="flex items-center gap-2 font-semibold text-sm">
-          <Filter className="h-4 w-4 text-primary" />
+    <aside className="w-full space-y-7">
+      <div className="flex items-center justify-between pb-3.5 border-b border-border">
+        <div className="flex items-center gap-2 font-bold text-base text-foreground">
+          <Filter className="h-4.5 w-4.5 text-primary" />
           <span>Filters</span>
         </div>
 
         {hasActiveFilters && (
           <button
             onClick={onResetFilters}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline transition-colors"
           >
-            <RotateCcw className="h-3 w-3" />
+            <RotateCcw className="h-3.5 w-3.5" />
             Reset all
           </button>
         )}
@@ -86,16 +86,16 @@ export function FilterSidebar({
       {/* Lab Filter */}
       {facets?.labs && facets.labs.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
             AI Research Lab
           </h4>
-          <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
+          <div className="space-y-1 max-h-52 overflow-y-auto pr-1">
             <button
               onClick={() => onFilterChange("lab", undefined)}
-              className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-all ${
                 !selectedLab
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  ? "bg-primary/10 text-primary font-bold shadow-xs"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground font-medium"
               }`}
             >
               <span>All Labs</span>
@@ -104,14 +104,14 @@ export function FilterSidebar({
               <button
                 key={lab.slug}
                 onClick={() => onFilterChange("lab", selectedLab === lab.slug ? undefined : lab.slug)}
-                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-all ${
                   selectedLab === lab.slug
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    ? "bg-primary/10 text-primary font-bold shadow-xs"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground font-medium"
                 }`}
               >
                 <span className="truncate">{lab.name}</span>
-                <span className="text-[10px] text-muted-foreground ml-2">({lab.count})</span>
+                <span className="text-xs text-muted-foreground ml-2">({lab.count})</span>
               </button>
             ))}
           </div>
@@ -121,16 +121,16 @@ export function FilterSidebar({
       {/* Provider Filter */}
       {facets?.providers && facets.providers.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
             Cloud Provider
           </h4>
-          <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
+          <div className="space-y-1 max-h-52 overflow-y-auto pr-1">
             <button
               onClick={() => onFilterChange("provider", undefined)}
-              className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-all ${
                 !selectedProvider
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  ? "bg-primary/10 text-primary font-bold shadow-xs"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground font-medium"
               }`}
             >
               <span>All Providers</span>
@@ -139,14 +139,14 @@ export function FilterSidebar({
               <button
                 key={p.slug}
                 onClick={() => onFilterChange("provider", selectedProvider === p.slug ? undefined : p.slug)}
-                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-all ${
                   selectedProvider === p.slug
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    ? "bg-primary/10 text-primary font-bold shadow-xs"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground font-medium"
                 }`}
               >
                 <span className="truncate">{p.name}</span>
-                <span className="text-[10px] text-muted-foreground ml-2">({p.count})</span>
+                <span className="text-xs text-muted-foreground ml-2">({p.count})</span>
               </button>
             ))}
           </div>
@@ -155,17 +155,17 @@ export function FilterSidebar({
 
       {/* Model Type */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
           Model Modality & Type
         </h4>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {["LLM", "MULTIMODAL", "EMBEDDING", "IMAGE"].map((type) => (
             <button
               key={type}
               onClick={() => onFilterChange("modelType", selectedType === type ? undefined : type)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
                 selectedType === type
-                  ? "bg-primary text-primary-foreground border-primary"
+                  ? "bg-primary text-primary-foreground border-primary shadow-xs"
                   : "border-border text-muted-foreground hover:bg-accent hover:text-foreground"
               }`}
             >
@@ -177,10 +177,10 @@ export function FilterSidebar({
 
       {/* Min Context Window */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
           Min Context Window
         </h4>
-        <div className="grid grid-cols-2 gap-1.5">
+        <div className="grid grid-cols-2 gap-2">
           {[
             { label: "Any", value: undefined },
             { label: "32K+", value: "32768" },
@@ -190,9 +190,9 @@ export function FilterSidebar({
             <button
               key={option.label}
               onClick={() => onFilterChange("minContext", option.value)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-medium border text-center transition-colors ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold border text-center transition-all ${
                 minContext === option.value
-                  ? "bg-primary text-primary-foreground border-primary"
+                  ? "bg-primary text-primary-foreground border-primary shadow-xs"
                   : "border-border text-muted-foreground hover:bg-accent hover:text-foreground"
               }`}
             >
@@ -205,22 +205,22 @@ export function FilterSidebar({
       {/* Capabilities */}
       {facets?.capabilities && facets.capabilities.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
             Key Capabilities
           </h4>
-          <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-52 overflow-y-auto pr-1">
             {facets.capabilities.map((c) => {
               const active = selectedCapabilities.includes(c.slug);
               return (
                 <label
                   key={c.slug}
-                  className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground cursor-pointer select-none"
+                  className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-foreground cursor-pointer select-none font-medium"
                 >
                   <input
                     type="checkbox"
                     checked={active}
                     onChange={() => toggleCapability(c.slug)}
-                    className="rounded border-border text-primary focus:ring-primary h-3.5 w-3.5"
+                    className="rounded-md border-border text-primary focus:ring-primary h-4 w-4"
                   />
                   <span>{c.name}</span>
                 </label>
@@ -232,7 +232,7 @@ export function FilterSidebar({
 
       {/* License Type */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
           License
         </h4>
         <div className="space-y-1">
@@ -245,10 +245,10 @@ export function FilterSidebar({
             <button
               key={lic.label}
               onClick={() => onFilterChange("license", lic.value)}
-              className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-all ${
                 selectedLicense === lic.value
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  ? "bg-primary/10 text-primary font-bold shadow-xs"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground font-medium"
               }`}
             >
               <span>{lic.label}</span>
