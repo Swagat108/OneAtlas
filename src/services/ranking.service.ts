@@ -12,7 +12,10 @@ export async function getRankings(params: RankingQuery) {
     if (category) {
       const topBenchmark = await prisma.benchmark.findFirst({
         where: { category: category as BenchmarkCategory },
-        orderBy: { slug: "asc" },
+        orderBy: [
+          { scores: { _count: "desc" } },
+          { slug: "asc" },
+        ],
       });
       targetBenchmarkSlug = topBenchmark?.slug;
     } else {
