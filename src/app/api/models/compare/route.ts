@@ -3,6 +3,8 @@ import { compareQuerySchema } from "@/schemas/compare.schema";
 import * as compareService from "@/services/compare.service";
 import { apiSuccess, handleApiError } from "@/lib/api-response";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = Object.fromEntries(request.nextUrl.searchParams);
