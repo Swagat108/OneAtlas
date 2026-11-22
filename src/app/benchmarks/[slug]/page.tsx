@@ -36,7 +36,7 @@ export default async function BenchmarkDetailPage({ params }: BenchmarkDetailPag
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <main className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-muted-foreground mb-6">
           <Link href="/benchmarks" className="hover:text-foreground">

@@ -41,7 +41,7 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-18 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-10">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3 group">
@@ -87,11 +87,11 @@ export function Navbar() {
             {/* Quick Search Button */}
             <button
               onClick={() => setIsCommandOpen(true)}
-              className="flex items-center gap-2.5 rounded-xl border border-border bg-card/80 px-3.5 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-all shadow-xs"
+              className="flex items-center gap-2.5 rounded-xl border border-border bg-card/80 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-all shadow-xs whitespace-nowrap shrink-0"
             >
-              <Search className="h-4 w-4" />
+              <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
               <span className="hidden sm:inline">Search models, labs...</span>
-              <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-mono font-semibold">
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-mono font-semibold ml-1">
                 ⌘K
               </kbd>
             </button>
