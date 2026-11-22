@@ -146,27 +146,6 @@ export function BenchmarksView({ initialBenchmarks }: BenchmarksViewProps) {
 
           {/* Dropdown Filters Group */}
           <div className="flex flex-wrap items-center gap-3">
-            {/* Category / Parameter Dropdown */}
-            <div className="flex items-center gap-2">
-              <label htmlFor="category-select" className="text-xs font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap hidden sm:inline">
-                Parameter:
-              </label>
-              <select
-                id="category-select"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold outline-none focus:border-primary text-foreground shadow-xs cursor-pointer"
-              >
-                <option value="ALL">All Parameters ({categoryCounts.ALL || 0})</option>
-                <option value="MATH">Mathematics ({categoryCounts.MATH || 0})</option>
-                <option value="REASONING">Reasoning ({categoryCounts.REASONING || 0})</option>
-                <option value="CODING">Coding ({categoryCounts.CODING || 0})</option>
-                <option value="MULTIMODAL">Multimodal ({categoryCounts.MULTIMODAL || 0})</option>
-                <option value="KNOWLEDGE">Knowledge ({categoryCounts.KNOWLEDGE || 0})</option>
-                <option value="AGENTIC">Agentic ({categoryCounts.AGENTIC || 0})</option>
-              </select>
-            </div>
-
             {/* Direct Benchmark Selector Dropdown */}
             <div className="flex items-center gap-2">
               <label htmlFor="benchmark-select" className="text-xs font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap hidden sm:inline">
