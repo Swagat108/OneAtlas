@@ -46,7 +46,7 @@ function RankingsContent() {
     if (key === "category") {
       params.delete("benchmark");
     }
-    router.push(`/rankings?${params.toString()}`);
+    router.replace(`/rankings?${params.toString()}`, { scroll: false });
   };
 
   const rankings = data?.rankings ?? [];

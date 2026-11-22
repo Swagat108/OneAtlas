@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export function useRankings(category?: string, benchmark?: string) {
   const params = new URLSearchParams();
@@ -16,5 +16,6 @@ export function useRankings(category?: string, benchmark?: string) {
       return json.data;
     },
     staleTime: 2 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
