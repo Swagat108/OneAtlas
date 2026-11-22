@@ -153,3 +153,33 @@ This document tracks all significant architectural decisions, trade-offs, ration
 - **Trade-offs:**
   - *Pros:* Clear change isolation, auditable PR history, zero risk to production stability, easy cherry-picking, and alignment with industry best practices (Google, Meta, Vercel).
   - *Cons:* Requires maintaining branch discipline and synchronizing integration branches.
+
+---
+
+## ADR 011: Responsive Mobile-First Architecture, Feedback Toast System, and Human-Centric UI/UX Decisions
+
+- **Date:** 2026-11-22
+- **Status:** Accepted
+- **Context:**
+  OneAtlas handles dense data (46+ models, 10 AI labs, 9 cloud providers, multiple rate cards per million tokens, 10 benchmarks, and multi-model comparison matrices). On mobile viewports (320px–430px) and small tablets, complex data tables and multi-facet filtering can easily cause horizontal overflow, layout shift, or broken tap targets. Furthermore, users require immediate, non-intrusive feedback when managing comparisons or copying links.
+- **Decision:**
+  1. **Mobile Bottom-Sheet Filter Drawer:**
+     - On `< lg` viewports, the desktop sidebar transforms into a slide-up bottom sheet drawer with backdrop blur and body scroll lock.
+     - A sticky bottom action bar provides a one-click "Reset" button and a prominent "Apply Filters (N active)" button.
+     - Active filters are rendered as dismissible chips directly above the catalog with a live result count indicator.
+  2. **Sticky Column Architecture for Complex Tables:**
+     - In `/compare`, the first column (`Model Spec`) is pinned with `sticky left-0 bg-card z-10 border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]`, allowing smooth horizontal scrolling across 2–4 models without losing row context.
+     - In `/rankings`, the `Rank` and `Model` columns are sticky pinned so model names and badges remain visible while scrolling through scores, context length, and pricing.
+     - In `/models/[slug]`, the `Provider` column is sticky pinned on the cloud pricing table.
+  3. **Accessible Toast Notification System:**
+     - Centralized `ToastProvider` mounted in `src/app/providers.tsx` providing `useToast()`.
+     - Automatically dismisses after 3.5s with slide-up CSS transitions and color-coded semantic icons (success, destructive, info, default).
+     - Directly integrated into `CompareTrayProvider` for real-time notifications on model addition, tray capacity limits (max 4), and removals.
+  4. **Human-Centric Information Design & Interactive Standout Features:**
+     - Replaced raw ISO dates with relative human dates ("Released 2 months ago") with hover tooltips displaying the full exact date.
+     - Added plain-language tooltips for technical jargon (`TTFT` = Time To First Token latency, `Throughput` = tokens per second, `Context Window` = prompt capacity).
+     - Built an **Interactive Monthly Production Token Cost Calculator** widget directly on `/models/[slug]`, allowing engineering leaders to drag sliders for monthly input and output token volumes and instantly see ranked hosting provider costs and dollar savings.
+     - Implemented full keyboard navigation (`ArrowUp`, `ArrowDown`, `Enter`, `ESC`) and `localStorage` recent searches in the global `Cmd+K` command palette.
+- **Trade-offs:**
+  - *Pros:* Exceptional mobile experience across all viewports (320px to 2560px), zero horizontal page overflow, instant user feedback, zero layout shift (CLS), and an interactive cost calculator that directly assists enterprise AI purchasing decisions.
+  - *Cons:* Slightly increased component complexity for tables requiring both sticky positioning and border shadows.

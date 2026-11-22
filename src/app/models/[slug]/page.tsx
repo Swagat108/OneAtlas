@@ -6,16 +6,17 @@ import { notFound } from "next/navigation";
 import {
   Sparkles,
   ArrowLeft,
-  Layers,
   Plus,
   Check,
   Zap,
   Globe,
-  Clock,
   ExternalLink,
   ShieldCheck,
   Server,
-  FileText,
+  ChevronRight,
+  Info,
+  Clock,
+  ArrowRight,
 } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -25,13 +26,19 @@ import { Button } from "@/components/ui/Button";
 import { ScoreBar } from "@/components/ui/ScoreBar";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { formatCurrency, formatTokenCount, formatDate } from "@/lib/utils";
+import { TokenCostCalculator } from "@/components/features/models/TokenCostCalculator";
+import { formatCurrency, formatTokenCount, formatDate, formatRelativeTime } from "@/lib/utils";
 import { useModelDetail } from "@/hooks/use-model-detail";
+import { useModels } from "@/hooks/use-models";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
 export default function ModelDetailPage({ params }: { params: { slug: string } }) {
   const { data: model, isLoading, isError } = useModelDetail(params.slug);
   const { isInTray, addModel, removeModel } = useCompareTray();
+
+  // Related models from the same lab
+  const labSlug = model?.lab?.slug;
+  const { data: relatedData } = useModels(labSlug ? `lab=${labSlug}&pageSize=4` : "");
 
   if (isError) {
     return notFound();
@@ -52,21 +59,35 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
     }
   };
 
+  const relatedModels = (relatedData?.data ?? []).filter((m: any) => m.slug !== params.slug).slice(0, 3);
+
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full">
-        {/* Breadcrumb & Navigation */}
-        <div className="mb-6">
-          <Link
-            href="/models"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Model Catalog
+      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-24 sm:pb-8">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 overflow-x-auto whitespace-nowrap pb-1">
+          <Link href="/" className="hover:text-foreground transition-colors">
+            Home
           </Link>
-        </div>
+          <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+          <Link href="/models" className="hover:text-foreground transition-colors">
+            Models
+          </Link>
+          {model && (
+            <>
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+              <Link href={`/labs/${model.lab.slug}`} className="hover:text-foreground transition-colors">
+                {model.lab.name}
+              </Link>
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+              <span className="font-semibold text-foreground truncate max-w-[200px]">
+                {model.name}
+              </span>
+            </>
+          )}
+        </nav>
 
         {isLoading ? (
           <div className="space-y-6">
@@ -95,8 +116,12 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                       {model.lab.name}
                     </Link>
                     <span className="text-muted-foreground">•</span>
-                    <span className="text-xs text-muted-foreground">
-                      Released {formatDate(model.releaseDate)}
+                    <span
+                      title={formatDate(model.releaseDate)}
+                      className="text-xs text-muted-foreground flex items-center gap-1 cursor-help"
+                    >
+                      <Clock className="h-3 w-3" />
+                      Released {formatRelativeTime(model.releaseDate)}
                     </span>
                   </div>
 
@@ -108,29 +133,29 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                     {model.description}
                   </p>
 
-                {/* Modalities & Capabilities Pills */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  <Badge variant="brand" size="md">
-                    {model.modelType}
-                  </Badge>
-                  {model.parameterCount && (
-                    <Badge variant="secondary" size="md">
-                      {model.parameterCount}
+                  {/* Modalities & Capabilities Pills */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <Badge variant="brand" size="md">
+                      {model.modelType}
                     </Badge>
-                  )}
-                  <Badge variant="outline" size="md" className="capitalize">
-                    {model.license.toLowerCase().replace("_", " ")}
-                  </Badge>
-                  {model.architecture && (
-                    <Badge variant="outline" size="md">
-                      {model.architecture}
+                    {model.parameterCount && (
+                      <Badge variant="secondary" size="md">
+                        {model.parameterCount}
+                      </Badge>
+                    )}
+                    <Badge variant="outline" size="md" className="capitalize">
+                      {model.license.toLowerCase().replace("_", " ")}
                     </Badge>
-                  )}
+                    {model.architecture && (
+                      <Badge variant="outline" size="md">
+                        {model.architecture}
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Action Buttons */}
+              {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 shrink-0">
                 <Button
                   variant={inTray ? "secondary" : "primary"}
@@ -155,33 +180,60 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
               </div>
             </div>
 
-            {/* Quick Specs Strip */}
+            {/* Quick Specs Strip with Human Tooltips */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-muted-foreground block">Context Window</span>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Context Window</span>
+                  <span title="Total capacity of input prompt plus generation history" className="cursor-help">
+                    <Info className="h-3.5 w-3.5" />
+                  </span>
+                </div>
                 <span className="text-xl font-extrabold text-foreground mt-1 block">
                   {formatTokenCount(model.contextWindow)} tokens
                 </span>
+                <span className="text-[11px] text-muted-foreground mt-0.5 block">Max prompt size</span>
               </div>
+
               <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-muted-foreground block">Max Output Tokens</span>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Max Output Tokens</span>
+                  <span title="Maximum number of tokens the model can produce in a single response" className="cursor-help">
+                    <Info className="h-3.5 w-3.5" />
+                  </span>
+                </div>
                 <span className="text-xl font-extrabold text-foreground mt-1 block">
                   {formatTokenCount(model.maxOutputTokens)} tokens
                 </span>
+                <span className="text-[11px] text-muted-foreground mt-0.5 block">Per response</span>
               </div>
+
               <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-muted-foreground block">Cheapest Input Price</span>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Cheapest Input Price</span>
+                  <span title="Lowest pricing per million input tokens across all hosting providers" className="cursor-help">
+                    <Info className="h-3.5 w-3.5" />
+                  </span>
+                </div>
                 <span className="text-xl font-extrabold text-primary mt-1 block">
                   {model.pricingSummary.minInputPricePerMillion !== null
                     ? `${formatCurrency(model.pricingSummary.minInputPricePerMillion)} / 1M`
                     : "Free"}
                 </span>
+                <span className="text-[11px] text-muted-foreground mt-0.5 block">Best rate card</span>
               </div>
+
               <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-muted-foreground block">Hosting Providers</span>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Hosting Providers</span>
+                  <span title="Number of commercial and cloud inference APIs hosting this model" className="cursor-help">
+                    <Info className="h-3.5 w-3.5" />
+                  </span>
+                </div>
                 <span className="text-xl font-extrabold text-foreground mt-1 block">
                   {model.providers.length} available
                 </span>
+                <span className="text-[11px] text-muted-foreground mt-0.5 block">Inference endpoints</span>
               </div>
             </div>
 
@@ -235,7 +287,7 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
               </div>
             </div>
 
-            {/* Provider Pricing Comparison Table */}
+            {/* Provider Pricing Comparison Table with Sticky First Column */}
             <div className="rounded-2xl border border-border bg-card overflow-hidden">
               <div className="p-6 border-b border-border flex items-center justify-between">
                 <div>
@@ -253,18 +305,28 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
                     <tr className="border-b border-border bg-muted/40 font-semibold text-muted-foreground uppercase tracking-wider">
-                      <th className="p-4">Provider</th>
+                      <th className="sticky left-0 bg-card z-20 p-4 min-w-[12rem] border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                        Provider
+                      </th>
                       <th className="p-4">Input Price (1M tokens)</th>
                       <th className="p-4">Output Price (1M tokens)</th>
-                      <th className="p-4">Latency (TTFT)</th>
-                      <th className="p-4">Throughput</th>
+                      <th className="p-4">
+                        <span className="flex items-center gap-1" title="Time to first token (response latency)">
+                          Latency (TTFT) <Info className="h-3 w-3 text-muted-foreground" />
+                        </span>
+                      </th>
+                      <th className="p-4">
+                        <span className="flex items-center gap-1" title="Generation speed in tokens per second">
+                          Throughput <Info className="h-3 w-3 text-muted-foreground" />
+                        </span>
+                      </th>
                       <th className="p-4">Availability</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
                     {model.providers.map((p: any, idx: number) => (
                       <tr key={p.id} className="hover:bg-muted/20">
-                        <td className="p-4 font-semibold text-foreground">
+                        <td className="sticky left-0 bg-card z-10 p-4 font-semibold text-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
                           <Link
                             href={`/providers/${p.provider.slug}`}
                             className="hover:text-primary transition-colors inline-flex items-center gap-2"
@@ -308,6 +370,9 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
               </div>
             </div>
 
+            {/* Interactive Monthly Token Cost Calculator */}
+            <TokenCostCalculator providers={model.providers} modelName={model.name} />
+
             {/* Benchmark Scores Section */}
             {model.benchmarkScores && model.benchmarkScores.length > 0 && (
               <div className="rounded-2xl border border-border bg-card p-6">
@@ -347,6 +412,59 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                         }
                       />
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Similar Models Cross-linking Section */}
+            {relatedModels.length > 0 && (
+              <div className="pt-6 border-t border-border">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-xl font-extrabold text-foreground">
+                      More Models from {model.lab.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                      Explore alternative tiers and releases from the same research laboratory.
+                    </p>
+                  </div>
+                  <Link
+                    href={`/models?lab=${model.lab.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary hover:underline"
+                  >
+                    View all <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {relatedModels.map((rm: any) => (
+                    <Link
+                      key={rm.slug}
+                      href={`/models/${rm.slug}`}
+                      className="rounded-xl border border-border bg-card p-4 hover:border-primary/50 hover:shadow-md transition-all group"
+                    >
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <BrandLogo
+                          logoUrl={rm.lab?.logoUrl}
+                          slug={rm.lab?.slug}
+                          name={rm.name}
+                          size="xs"
+                        />
+                        <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                          {rm.name}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                        {rm.description}
+                      </p>
+                      <div className="mt-3 pt-2 border-t border-border/60 flex items-center justify-between text-[11px]">
+                        <span className="text-muted-foreground">Context: {formatTokenCount(rm.contextWindow)}</span>
+                        <span className="font-bold text-primary">
+                          {rm.minInputPrice !== null ? `${formatCurrency(rm.minInputPrice)} / 1M` : "Free"}
+                        </span>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>
