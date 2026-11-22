@@ -105,16 +105,16 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
         </div>
       </div>
 
-      {/* Side-by-side spec table with sticky first column */}
-      <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
+      {/* Side-by-side spec table with sticky top headers and sticky first column */}
+      <div className="overflow-auto max-h-[calc(100vh-10rem)] rounded-2xl border border-border bg-card shadow-sm">
         <table className="w-full text-left border-collapse text-sm">
-          <thead>
-            <tr className="border-b border-border bg-muted/40">
-              <th className="sticky left-0 bg-card z-20 p-4 font-semibold text-xs text-muted-foreground uppercase tracking-wider w-48 min-w-[11rem] border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+          <thead className="sticky top-0 z-30 bg-card border-b border-border shadow-xs">
+            <tr className="border-b border-border bg-card">
+              <th className="sticky left-0 top-0 z-40 bg-card p-4 font-semibold text-xs text-muted-foreground uppercase tracking-wider w-48 min-w-[11rem] border-r border-b border-border shadow-[2px_2px_5px_rgba(0,0,0,0.03)]">
                 Model Spec
               </th>
               {models.map((m) => (
-                <th key={m.slug} className="p-4 font-bold min-w-[15rem] align-top">
+                <th key={m.slug} className="sticky top-0 z-30 bg-card p-4 font-bold min-w-[15rem] align-top border-b border-border">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5">
                       <BrandLogo

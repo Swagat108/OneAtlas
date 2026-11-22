@@ -54,7 +54,7 @@ function ComparePageContent() {
     <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-24 sm:pb-8">
+      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-36 sm:pb-32">
         {/* Page Title */}
         <div className="pb-6 border-b border-border mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-0.5 text-xs font-semibold text-primary mb-3">
