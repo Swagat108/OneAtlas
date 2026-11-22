@@ -24,10 +24,10 @@ export default async function LabDetailPage({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full">
+      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-24 sm:pb-8">
         {/* Navigation */}
         <div className="mb-6">
           <Link

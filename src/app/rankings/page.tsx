@@ -53,10 +53,10 @@ function RankingsContent() {
   const currentBenchmark = data?.benchmark;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full">
+      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-24 sm:pb-8">
         {/* Header */}
         <div className="pb-8 border-b border-border mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs sm:text-sm font-bold text-primary mb-3">
@@ -153,8 +153,8 @@ function RankingsContent() {
               <table className="w-full text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-border bg-muted/40 font-bold text-muted-foreground uppercase tracking-wider text-xs">
-                    <th className="p-4 w-16 text-center">Rank</th>
-                    <th className="p-4 min-w-[14rem]">Model</th>
+                    <th className="sticky left-0 bg-card z-20 p-4 w-14 text-center">Rank</th>
+                    <th className="sticky left-14 bg-card z-20 p-4 min-w-[14rem] border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">Model</th>
                     <th className="p-4 min-w-[16rem]">Benchmark Score</th>
                     <th className="p-4">Context</th>
                     <th className="p-4">Min Price (1M)</th>
@@ -169,7 +169,7 @@ function RankingsContent() {
                     return (
                       <tr key={item.model.slug} className="hover:bg-muted/20">
                         {/* Rank */}
-                        <td className="p-4 text-center font-bold">
+                        <td className="sticky left-0 bg-card z-10 p-4 text-center font-bold">
                           {item.rank === 1 ? (
                             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-500/20 text-amber-500 font-extrabold text-xs">
                               1
@@ -188,7 +188,7 @@ function RankingsContent() {
                         </td>
 
                         {/* Model & Lab */}
-                        <td className="p-4">
+                        <td className="sticky left-14 bg-card z-10 p-4 border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
                           <div className="flex items-center gap-3">
                             <BrandLogo
                               logoUrl={item.model.lab?.logoUrl}

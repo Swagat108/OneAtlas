@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Check, Trophy, X, Share2, Copy, CheckCheck, Sparkles, ExternalLink } from "lucide-react";
+import { Trophy, X, Share2, CheckCheck, Sparkles, ExternalLink, Zap, DollarSign, Maximize2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount, formatScore } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
+import { useToast } from "@/context/toast.context";
 
 interface ComparisonMatrixProps {
   data: {
@@ -35,39 +36,85 @@ interface ComparisonMatrixProps {
 export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
   const { models, winners, benchmarksComparison } = data;
   const { removeModel } = useCompareTray();
+  const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
     if (typeof window !== "undefined") {
       navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      toast({
+        title: "Link Copied!",
+        description: "Direct comparison link copied to your clipboard.",
+        variant: "success",
+      });
       setTimeout(() => setCopied(false), 2000);
     }
   };
 
+  const cheapestModel = models.find((m) => m.slug === winners.cheapestModelSlug);
+  const largestContextModel = models.find((m) => m.slug === winners.largestContextSlug);
+
   return (
-    <div className="space-y-8">
-      {/* Top action bar */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-6">
+      {/* Top action bar & Verdict Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <p className="text-sm text-muted-foreground">
           Comparing <span className="font-semibold text-foreground">{models.length}</span> models side-by-side
         </p>
-        <Button variant="outline" size="sm" onClick={handleShare} className="gap-2">
+        <Button variant="outline" size="sm" onClick={handleShare} className="gap-2 shrink-0">
           {copied ? <CheckCheck className="h-4 w-4 text-emerald-500" /> : <Share2 className="h-4 w-4" />}
           {copied ? "Link Copied!" : "Share Comparison"}
         </Button>
       </div>
 
-      {/* Side-by-side spec table */}
-      <div className="overflow-x-auto rounded-2xl border border-border bg-card">
+      {/* Human-friendly Comparison Verdict Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4 rounded-2xl border border-primary/20 bg-primary/5">
+        {cheapestModel && (
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+              <DollarSign className="h-4.5 w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">Best Economy</span>
+              <span className="text-xs font-bold text-foreground truncate block">{cheapestModel.name}</span>
+            </div>
+          </div>
+        )}
+
+        {largestContextModel && (
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-cyan/10 text-brand-cyan shrink-0">
+              <Maximize2 className="h-4.5 w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">Largest Context</span>
+              <span className="text-xs font-bold text-foreground truncate block">{largestContextModel.name} ({formatTokenCount(largestContextModel.contextWindow)})</span>
+            </div>
+          </div>
+        )}
+
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-purple/10 text-brand-purple shrink-0">
+            <Zap className="h-4.5 w-4.5" />
+          </div>
+          <div className="min-w-0">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">Benchmarks Evaluated</span>
+            <span className="text-xs font-bold text-foreground truncate block">{benchmarksComparison.length} Standard Tests</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Side-by-side spec table with sticky first column */}
+      <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
         <table className="w-full text-left border-collapse text-sm">
           <thead>
             <tr className="border-b border-border bg-muted/40">
-              <th className="p-4 font-semibold text-xs text-muted-foreground uppercase tracking-wider w-48 min-w-[12rem]">
+              <th className="sticky left-0 bg-card z-20 p-4 font-semibold text-xs text-muted-foreground uppercase tracking-wider w-48 min-w-[11rem] border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
                 Model Spec
               </th>
               {models.map((m) => (
-                <th key={m.slug} className="p-4 font-bold min-w-[16rem] align-top">
+                <th key={m.slug} className="p-4 font-bold min-w-[15rem] align-top">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5">
                       <BrandLogo
@@ -94,6 +141,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
                       onClick={() => removeModel(m.slug)}
                       className="text-muted-foreground hover:text-destructive p-1 rounded-md"
                       title="Remove model"
+                      aria-label={`Remove ${m.name}`}
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -106,7 +154,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
           <tbody className="divide-y divide-border text-sm">
             {/* Input Pricing */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">Min Input Price (1M tokens)</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                Min Input Price (1M tokens)
+              </td>
               {models.map((m) => {
                 const isWinner = winners.cheapestModelSlug === m.slug;
                 return (
@@ -128,7 +178,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {/* Context Window */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">Context Window</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                Context Window
+              </td>
               {models.map((m) => {
                 const isWinner = winners.largestContextSlug === m.slug;
                 return (
@@ -150,7 +202,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {/* Parameter Count */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">Parameters</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                Parameters
+              </td>
               {models.map((m) => (
                 <td key={m.slug} className="p-4 font-medium text-foreground">
                   {m.parameterCount || "Proprietary"}
@@ -160,7 +214,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {/* License */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">License</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                License
+              </td>
               {models.map((m) => (
                 <td key={m.slug} className="p-4 capitalize">
                   {m.license.toLowerCase().replace("_", " ")}
@@ -170,7 +226,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {/* Latency & Throughput */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">Best Latency / Throughput</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                Best Latency / Throughput
+              </td>
               {models.map((m) => (
                 <td key={m.slug} className="p-4">
                   <div>
@@ -185,7 +243,9 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {/* Capabilities */}
             <tr className="hover:bg-muted/20">
-              <td className="p-4 font-medium text-muted-foreground">Capabilities</td>
+              <td className="sticky left-0 bg-card z-10 p-4 font-medium text-muted-foreground border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
+                Capabilities
+              </td>
               {models.map((m) => (
                 <td key={m.slug} className="p-4">
                   <div className="flex flex-wrap gap-1">
@@ -211,7 +271,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
 
             {benchmarksComparison.map((row) => (
               <tr key={row.benchmark.slug} className="hover:bg-muted/20">
-                <td className="p-4">
+                <td className="sticky left-0 bg-card z-10 p-4 border-r border-border shadow-[2px_0_5px_rgba(0,0,0,0.03)]">
                   <span className="font-semibold block text-foreground">{row.benchmark.name}</span>
                   <span className="text-[10px] text-muted-foreground uppercase">{row.benchmark.category}</span>
                 </td>
