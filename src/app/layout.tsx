@@ -16,9 +16,25 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://oneatlas.dev"),
   title: "OneAtlas | AI Model Discovery & Intelligence Platform",
   description:
     "Discover, explore, compare and evaluate frontier and open-source AI models across cloud hosting providers.",
+  openGraph: {
+    title: "OneAtlas | AI Model Discovery & Intelligence Platform",
+    description:
+      "Discover, explore, compare and evaluate frontier and open-source AI models across cloud hosting providers.",
+    url: "https://oneatlas.dev",
+    siteName: "OneAtlas",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OneAtlas | AI Model Discovery & Intelligence Platform",
+    description:
+      "Discover, explore, compare and evaluate frontier and open-source AI models across cloud hosting providers.",
+  },
 };
 
 export const viewport: Viewport = {
