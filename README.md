@@ -19,7 +19,6 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 ## Table of Contents
 
 - [Overview](#overview)
-- [Key Interfaces](#key-interfaces)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
@@ -42,25 +41,6 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 OneAtlas is an independent intelligence platform built for developers, AI engineers, and researchers to discover, evaluate, and compare foundation AI models across multiple cloud inference providers. 
 
 Modern AI engineering faces significant pricing fragmentation across cloud hosts (Groq, Together AI, AWS Bedrock, Azure) and non-standardized benchmark reporting. OneAtlas resolves this by aggregating verified technical specifications, normalized per-million-token pricing economics, and standardized evaluation benchmarks into a single, unified database interface. 100% of data is served from a relational PostgreSQL database through type-safe REST API route handlers.
-
----
-
-## Key Interfaces
-
-### Model Catalog and Discovery
-![Model Catalog](docs/screenshots/models.png)
-
-### Side-by-Side Comparison Matrix
-![Comparison Matrix](docs/screenshots/compare.png)
-
-### Benchmark Intelligence and Leaderboards
-![Leaderboards](docs/screenshots/rankings.png)
-
-### Model Detail and Provider Rate Cards
-![Model Detail](docs/screenshots/model-detail.png)
-
-### Evaluation Standards
-![Evaluation Standards](docs/screenshots/benchmarks.png)
 
 ---
 
@@ -135,6 +115,7 @@ flowchart TD
 
     subgraph API["Backend API Tier (Next.js Route Handlers)"]
         RH["Route Handlers (src/app/api/**)"]
+        CRON["Protected Ingest Cron (/api/cron/ingest)"]
         ZOD["Zod Schema Validation (src/schemas/**)"]
         SVC["Service Layer (src/services/**)"]
         REPO["Repository Layer (src/repositories/**)"]
@@ -146,8 +127,8 @@ flowchart TD
         PG[("PostgreSQL Database")]
     end
 
-    subgraph Pipeline["Ingestion & Data Pipeline"]
-        INGEST["scripts/ingest/**"]
+    subgraph Pipeline["Ingestion & Verification Pipeline"]
+        INGEST["scripts/verify-sources.ts"]
         OPENROUTER["OpenRouter Public API"]
         HF["Hugging Face Hub & Datasets"]
         LMSYS["LMSYS Arena Leaderboards"]
@@ -163,6 +144,7 @@ flowchart TD
     POOL --> PG
     REPO -.->|DIRECT_URL| DIRECT
     DIRECT -.-> PG
+    CRON -->|Protected Scheduled Sync| PG
 
     INGEST --> OPENROUTER
     INGEST --> HF
@@ -203,6 +185,8 @@ erDiagram
         string website
         string country
         int foundedYear
+        datetime createdAt
+        datetime updatedAt
     }
 
     MODEL {
@@ -210,6 +194,7 @@ erDiagram
         string slug UK
         string name
         string labId FK
+        string description
         enum modelType
         datetime releaseDate
         int contextWindow
@@ -218,18 +203,39 @@ erDiagram
         enum license
         enum status
         string architecture
+        string huggingFaceUrl
+        string paperUrl
+        datetime createdAt
+        datetime updatedAt
     }
 
     MODALITY {
         string id PK
         string slug UK
         string name
+        string description
+    }
+
+    MODEL_INPUT_MODALITY {
+        string modelId PK,FK
+        string modalityId PK,FK
+    }
+
+    MODEL_OUTPUT_MODALITY {
+        string modelId PK,FK
+        string modalityId PK,FK
     }
 
     CAPABILITY {
         string id PK
         string slug UK
         string name
+        string description
+    }
+
+    MODEL_CAPABILITY {
+        string modelId PK,FK
+        string capabilityId PK,FK
     }
 
     PROVIDER {
@@ -238,6 +244,10 @@ erDiagram
         string name
         string website
         string[] regions
+        string description
+        string logoUrl
+        datetime createdAt
+        datetime updatedAt
     }
 
     MODEL_PROVIDER {
@@ -246,10 +256,16 @@ erDiagram
         string providerId FK
         decimal inputPricePerMillion
         decimal outputPricePerMillion
+        string currency
+        int contextWindowOverride
         float latencyMs
         float throughputTps
+        boolean isAvailable
         string source
+        string sourceUrl
         datetime fetchedAt
+        datetime createdAt
+        datetime updatedAt
     }
 
     BENCHMARK {
@@ -257,6 +273,7 @@ erDiagram
         string slug UK
         string name
         enum category
+        string description
         float maxScore
         boolean higherIsBetter
     }
@@ -268,6 +285,7 @@ erDiagram
         float score
         string source
         string sourceUrl
+        datetime fetchedAt
         datetime measuredAt
     }
 
@@ -276,6 +294,7 @@ erDiagram
         string modelId FK
         string alias UK
         string source
+        datetime createdAt
     }
 
     DATA_SYNC_LOG {
@@ -284,6 +303,8 @@ erDiagram
         string status
         int recordsCreated
         int recordsUpdated
+        int recordsSkipped
+        string error
         datetime startedAt
         datetime finishedAt
     }
