@@ -5,6 +5,11 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: '**' }
     ]
+  },
+  webpack: (config) => {
+    // Disable webpack disk caching to prevent OneDrive file-locking collisions on Windows
+    config.cache = false;
+    return config;
   }
 };
 
