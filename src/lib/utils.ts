@@ -72,6 +72,25 @@ export function formatDate(date: string | Date | null | undefined): string {
 }
 
 /**
+ * Formats date into relative time string (e.g. "2 months ago", "1 year ago")
+ */
+export function formatRelativeTime(date: string | Date | null | undefined): string {
+  if (!date) return "Recently";
+  const d = typeof date === "string" ? new Date(date) : date;
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays <= 0) return "Just released";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 30) return `${diffDays} days ago`;
+  const diffMonths = Math.floor(diffDays / 30);
+  if (diffMonths < 12) return `${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`;
+  const diffYears = Math.floor(diffDays / 365);
+  return `${diffYears} year${diffYears > 1 ? "s" : ""} ago`;
+}
+
+/**
  * Converts a text string to URL slug
  */
 export function slugify(text: string): string {

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/query-client";
 import { CompareTrayProvider } from "@/hooks/use-compare-tray";
+import { ToastProvider } from "@/context/toast.context";
 
 type Theme = "dark" | "light" | "system";
 
@@ -69,7 +70,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <CompareTrayProvider>{children}</CompareTrayProvider>
+        <ToastProvider>
+          <CompareTrayProvider>{children}</CompareTrayProvider>
+        </ToastProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
