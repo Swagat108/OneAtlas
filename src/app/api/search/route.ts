@@ -3,6 +3,8 @@ import { searchQuerySchema } from "@/schemas/search.schema";
 import * as searchService from "@/services/search.service";
 import { apiSuccess, handleApiError } from "@/lib/api-response";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = Object.fromEntries(request.nextUrl.searchParams);

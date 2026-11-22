@@ -3,6 +3,8 @@ import { modelFilterQuerySchema } from "@/schemas/model.schema";
 import * as modelService from "@/services/model.service";
 import { apiPaginatedSuccess, handleApiError } from "@/lib/api-response";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = Object.fromEntries(request.nextUrl.searchParams);
