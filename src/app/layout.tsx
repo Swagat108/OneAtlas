@@ -15,8 +15,17 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "https://oneatlas.vercel.app";
+};
+
+const siteUrl = getBaseUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://oneatlas.dev"),
+  metadataBase: new URL(siteUrl),
   title: "OneAtlas | AI Model Discovery & Intelligence Platform",
   description:
     "Discover, explore, compare and evaluate frontier and open-source AI models across cloud hosting providers.",
@@ -24,7 +33,7 @@ export const metadata: Metadata = {
     title: "OneAtlas | AI Model Discovery & Intelligence Platform",
     description:
       "Discover, explore, compare and evaluate frontier and open-source AI models across cloud hosting providers.",
-    url: "https://oneatlas.dev",
+    url: siteUrl,
     siteName: "OneAtlas",
     locale: "en_US",
     type: "website",
