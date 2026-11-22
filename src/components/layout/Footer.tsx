@@ -5,7 +5,7 @@ import { Sparkles, Heart } from "lucide-react";
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card/40 mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           <div className="flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -27,6 +27,9 @@ export function Footer() {
             <Link href="/rankings" className="hover:text-foreground transition-colors">
               Leaderboards
             </Link>
+            <Link href="/benchmarks" className="hover:text-foreground transition-colors">
+              Benchmarks
+            </Link>
             <Link href="/labs" className="hover:text-foreground transition-colors">
               AI Labs
             </Link>
@@ -38,6 +41,13 @@ export function Footer() {
           <div className="text-xs text-muted-foreground flex items-center gap-1">
             Built with Next.js, Prisma, Neon & Tailwind
           </div>
+        </div>
+
+        {/* Legal & Trademark Attribution */}
+        <div className="mt-8 pt-6 border-t border-border/40 text-center">
+          <p className="text-[11px] text-muted-foreground leading-relaxed">
+            All logos and trademarks are the property of their respective owners and are used for identification purposes only.
+          </p>
         </div>
       </div>
     </footer>

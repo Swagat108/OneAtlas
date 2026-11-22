@@ -29,13 +29,13 @@ export function ScoreBar({
 
   return (
     <div className={cn("w-full space-y-1.5", className)}>
-      <div className="flex justify-between items-center text-xs">
-        {label && <span className="font-medium text-muted-foreground truncate">{label}</span>}
-        <span className="font-semibold text-foreground ml-auto">
+      <div className="flex justify-between items-center text-xs sm:text-sm">
+        {label && <span className="font-semibold text-muted-foreground truncate">{label}</span>}
+        <span className="font-bold text-foreground ml-auto">
           {displayValue ?? `${score.toFixed(1)}%`}
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-muted/80">
+      <div className="h-2.5 w-full overflow-hidden rounded-full bg-muted/80">
         <div
           className={cn("h-full rounded-full transition-all duration-500", colors[colorScheme])}
           style={{ width: `${percentage}%` }}

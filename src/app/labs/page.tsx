@@ -4,6 +4,7 @@ import { Building2, Globe, ArrowRight, Sparkles } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { findAllLabs } from "@/repositories/lab.repo";
 
 export const revalidate = 60;
@@ -15,7 +16,7 @@ export default async function LabsPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <main className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full">
         {/* Header */}
         <div className="pb-6 border-b border-border mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-0.5 text-xs font-semibold text-primary mb-3">
@@ -38,13 +39,16 @@ export default async function LabsPage() {
               className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-lg"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-semibold text-muted-foreground">
-                    {lab.country} • Founded {lab.foundedYear}
-                  </span>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary">
-                    {lab._count.models} models
-                  </span>
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  <BrandLogo logoUrl={lab.logoUrl} slug={lab.slug} name={lab.name} size="lg" />
+                  <div className="text-right">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                      {lab._count.models} models
+                    </span>
+                    <span className="text-[11px] font-medium text-muted-foreground block mt-1">
+                      {lab.country} • {lab.foundedYear}
+                    </span>
+                  </div>
                 </div>
 
                 <Link href={`/labs/${lab.slug}`} className="block">

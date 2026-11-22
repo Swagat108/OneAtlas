@@ -23,8 +23,8 @@ export function Badge({
   };
 
   const sizeStyles = {
-    sm: "px-2 py-0.5 text-[11px]",
-    md: "px-2.5 py-1 text-xs",
+    sm: "px-2.5 py-0.5 text-xs font-medium",
+    md: "px-3 py-1 text-sm font-medium",
   };
 
   return (
