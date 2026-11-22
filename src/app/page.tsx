@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
@@ -170,7 +171,14 @@ export default function HomePage() {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-sm font-bold text-primary">{item.lab}</span>
+                    <div className="flex items-center gap-2">
+                      <BrandLogo
+                        slug={item.slug}
+                        name={item.name}
+                        size="xs"
+                      />
+                      <span className="text-sm font-bold text-primary">{item.lab}</span>
+                    </div>
                     <Badge variant="success" size="sm">
                       {item.badge}
                     </Badge>

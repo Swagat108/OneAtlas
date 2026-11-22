@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Plus, Check, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 import { ModelSummary } from "./ModelCard";
@@ -30,34 +31,43 @@ export function ModelListItem({ model }: ModelListItemProps) {
 
   return (
     <div className="group flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-md">
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2.5">
-          <Link
-            href={`/labs/${model.lab.slug}`}
-            className="text-sm font-bold text-primary hover:underline"
-          >
-            {model.lab.name}
-          </Link>
-          <span className="text-muted-foreground text-xs">•</span>
-          <Badge variant="outline" size="sm">
-            {model.modelType}
-          </Badge>
-          {model.parameterCount && (
-            <Badge variant="secondary" size="sm">
-              {model.parameterCount}
+      <div className="flex items-start gap-4 flex-1 min-w-0">
+        <BrandLogo
+          logoUrl={model.lab.logoUrl}
+          slug={model.lab.slug}
+          name={model.name}
+          size="md"
+          className="mt-0.5"
+        />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2.5">
+            <Link
+              href={`/labs/${model.lab.slug}`}
+              className="text-sm font-bold text-primary hover:underline"
+            >
+              {model.lab.name}
+            </Link>
+            <span className="text-muted-foreground text-xs">•</span>
+            <Badge variant="outline" size="sm">
+              {model.modelType}
             </Badge>
-          )}
-        </div>
+            {model.parameterCount && (
+              <Badge variant="secondary" size="sm">
+                {model.parameterCount}
+              </Badge>
+            )}
+          </div>
 
-        <Link href={`/models/${model.slug}`} className="mt-1.5 block">
-          <h3 className="text-lg font-extrabold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
-            {model.name}
-            <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
-          </h3>
-        </Link>
-        <p className="mt-1 text-sm text-muted-foreground line-clamp-1 leading-relaxed">
-          {model.description}
-        </p>
+          <Link href={`/models/${model.slug}`} className="mt-1.5 block">
+            <h3 className="text-lg font-extrabold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+              {model.name}
+              <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+            </h3>
+          </Link>
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-1 leading-relaxed">
+            {model.description}
+          </p>
+        </div>
       </div>
 
       {/* Right Column: Specs & Actions */}

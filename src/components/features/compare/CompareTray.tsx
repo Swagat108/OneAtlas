@@ -4,6 +4,7 @@ import React from "react";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 import { X, ArrowRight, Layers } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function CompareTray() {
   const { selectedModels, removeModel, clearTray, navigateToCompare } = useCompareTray();
@@ -22,12 +23,17 @@ export function CompareTray() {
           {selectedModels.map((m) => (
             <div
               key={m.slug}
-              className="flex items-center gap-2 rounded-xl border border-border bg-accent/70 px-3 py-1.5 text-xs sm:text-sm whitespace-nowrap font-semibold shadow-2xs"
+              className="flex items-center gap-2 rounded-xl border border-border bg-accent/70 px-2.5 py-1.5 text-xs sm:text-sm whitespace-nowrap font-semibold shadow-2xs"
             >
+              <BrandLogo
+                slug={m.slug}
+                name={m.name}
+                size="xs"
+              />
               <span>{m.name}</span>
               <button
                 onClick={() => removeModel(m.slug)}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors ml-0.5"
                 aria-label={`Remove ${m.name}`}
               >
                 <X className="h-4 w-4" />

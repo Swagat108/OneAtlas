@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Cpu, Layers, Plus, Check, ExternalLink, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { formatCurrency, formatTokenCount } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
@@ -58,18 +59,26 @@ export function ModelCard({ model }: ModelCardProps) {
   return (
     <div className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-xl">
       <div>
-        {/* Header: Lab & Compare Action */}
-        <div className="flex items-center justify-between gap-2">
-          <Link
-            href={`/labs/${model.lab.slug}`}
-            className="text-sm font-bold text-primary hover:underline tracking-tight"
-          >
-            {model.lab.name}
-          </Link>
+        {/* Header: Logo, Lab & Compare Action */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <BrandLogo
+              logoUrl={model.lab.logoUrl}
+              slug={model.lab.slug}
+              name={model.name}
+              size="sm"
+            />
+            <Link
+              href={`/labs/${model.lab.slug}`}
+              className="text-sm font-bold text-primary hover:underline tracking-tight truncate"
+            >
+              {model.lab.name}
+            </Link>
+          </div>
 
           <button
             onClick={toggleCompare}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold border transition-all shrink-0 ${
               inTray
                 ? "bg-primary text-primary-foreground border-primary shadow-xs"
                 : "border-border text-muted-foreground hover:bg-accent hover:text-foreground"

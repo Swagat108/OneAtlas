@@ -42,6 +42,13 @@ export function Footer() {
             Built with Next.js, Prisma, Neon & Tailwind
           </div>
         </div>
+
+        {/* Legal & Trademark Attribution */}
+        <div className="mt-8 pt-6 border-t border-border/40 text-center">
+          <p className="text-[11px] text-muted-foreground leading-relaxed">
+            All logos and trademarks are the property of their respective owners and are used for identification purposes only.
+          </p>
+        </div>
       </div>
     </footer>
   );

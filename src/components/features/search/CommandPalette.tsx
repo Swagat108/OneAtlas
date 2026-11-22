@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Compass, Building2, Server, X, ArrowRight } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { useSearch } from "@/hooks/use-search";
 import { cn } from "@/lib/utils";
 
@@ -131,7 +132,12 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Compass className="h-4 w-4 text-primary" />
+                    <BrandLogo
+                      logoUrl={m.logoUrl}
+                      slug={m.labSlug || m.slug}
+                      name={m.name}
+                      size="xs"
+                    />
                     <div>
                       <span className="font-medium">{m.name}</span>
                       <span className="text-xs text-muted-foreground ml-2">by {m.lab}</span>
@@ -155,7 +161,12 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Building2 className="h-4 w-4 text-brand-purple" />
+                    <BrandLogo
+                      logoUrl={l.logoUrl}
+                      slug={l.slug}
+                      name={l.name}
+                      size="xs"
+                    />
                     <div>
                       <span className="font-medium">{l.name}</span>
                       <span className="text-xs text-muted-foreground ml-2">({l.modelCount} models)</span>
@@ -179,7 +190,12 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                   className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent text-left transition-colors text-sm group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Server className="h-4 w-4 text-brand-emerald" />
+                    <BrandLogo
+                      logoUrl={p.logoUrl}
+                      slug={p.slug}
+                      name={p.name}
+                      size="xs"
+                    />
                     <div>
                       <span className="font-medium">{p.name}</span>
                       <span className="text-xs text-muted-foreground ml-2">({p.modelCount} models)</span>
