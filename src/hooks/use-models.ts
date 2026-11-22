@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export function useModels(searchParamsString: string) {
   return useQuery({
@@ -15,5 +15,6 @@ export function useModels(searchParamsString: string) {
       return json;
     },
     staleTime: 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
