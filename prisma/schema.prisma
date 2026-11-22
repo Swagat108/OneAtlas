@@ -87,6 +87,7 @@ model Model {
   // Providers & Benchmarks
   providers        ModelProvider[]
   benchmarkScores  BenchmarkScore[]
+  aliases          ModelAlias[]
 
   @@index([slug])
   @@index([labId])
@@ -176,6 +177,9 @@ model ModelProvider {
   latencyMs             Float?   // Median TTFT in milliseconds
   throughputTps         Float?   // Tokens per second
   isAvailable           Boolean  @default(true)
+  source                String?  @default("direct") // e.g. "openrouter", "official"
+  sourceUrl             String?
+  fetchedAt             DateTime? @default(now())
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
@@ -206,7 +210,9 @@ model BenchmarkScore {
   modelId     String
   benchmarkId String
   score       Float
-  source      String    // e.g. "Official Paper", "LMSYS Arena"
+  source      String    // e.g. "Official Paper", "LMSYS Arena", "Open LLM Leaderboard"
+  sourceUrl   String?
+  fetchedAt   DateTime? @default(now())
   measuredAt  DateTime  @default(now())
 
   model       Model     @relation(fields: [modelId], references: [id], onDelete: Cascade)
@@ -216,4 +222,32 @@ model BenchmarkScore {
   @@index([modelId])
   @@index([benchmarkId])
   @@index([score])
+}
+
+model ModelAlias {
+  id        String   @id @default(cuid())
+  modelId   String
+  alias     String   @unique // e.g. "openai/gpt-4o", "meta-llama/Llama-3.2-1B-Instruct"
+  source    String   // "openrouter", "huggingface"
+  createdAt DateTime @default(now())
+
+  model     Model    @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@index([modelId])
+  @@index([alias])
+}
+
+model DataSyncLog {
+  id             String    @id @default(cuid())
+  source         String    // "openrouter", "huggingface", "benchmarks", "labs"
+  status         String    // "SUCCESS", "FAILED", "RUNNING"
+  recordsCreated Int       @default(0)
+  recordsUpdated Int       @default(0)
+  recordsSkipped Int       @default(0)
+  error          String?   @db.Text
+  startedAt      DateTime  @default(now())
+  finishedAt     DateTime?
+
+  @@index([source])
+  @@index([startedAt])
 }
