@@ -25,7 +25,6 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 - [Database Design](#database-design)
 - [API Reference](#api-reference)
 - [Data Sources and Methodology](#data-sources-and-methodology)
-- [Getting Started](#getting-started)
 
 ---
 
@@ -411,55 +410,4 @@ OneAtlas enforces strict data provenance: no synthetic or guessed numbers are pe
 3. **Benchmark Evaluations:** Standardized scores are ingested from the [Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) (CC-BY 4.0), the [LMSYS Chatbot Arena](https://huggingface.co/spaces/lmarena-ai/arena-leaderboard) (Apache 2.0), and official technical system cards published by OpenAI, Anthropic, Google, and Meta.
 4. **Missing Value Handling:** If a technical specification, price, or benchmark score cannot be verified against official primary sources, it is stored as `NULL` and rendered as `"N/A"` in the UI.
 5. **Data Disclaimer:** Model pricing, provider availability, and benchmark evaluations are continuously updated and reflect the latest measurements from cited sources.
-
----
-
-## Getting Started
-
-### Prerequisites
-- Node.js `v18.18+` or `v20+` or `v22+`
-- npm `v9+` or `v10+`
-- Git
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/Swagat108/OneAtlas.git
-cd OneAtlas
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-
-| Variable | Description | Example Value |
-|---|---|---|
-| `DATABASE_URL` | Neon pooled connection string (port 6543) for runtime queries | `postgresql://user:pass@ep-pooler.region.neon.tech/neondb?sslmode=require` |
-| `DIRECT_URL` | Neon direct connection string (port 5432) for schema migrations | `postgresql://user:pass@ep-direct.region.neon.tech/neondb?sslmode=require` |
-| `NEXT_PUBLIC_APP_URL` | Public base URL used for canonical links and OpenGraph generation | `http://localhost:3000` (Local) or `https://oneatlas.vercel.app` (Production) |
-
-### 4. Database Setup & Seeding
-
-OneAtlas supports both **Local Embedded PostgreSQL** (no local database installation required) and **Cloud Neon PostgreSQL**:
-
-```bash
-# Option A: Start local embedded PostgreSQL (runs on port 5432)
-npm run db:local
-
-# In another terminal: push schema and seed reference data
-npx prisma db push
-npm run db:seed
-```
-
-### 5. Start Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
