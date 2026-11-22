@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Sparkles, Heart } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export function Footer() {
   return (
@@ -36,10 +36,6 @@ export function Footer() {
             <Link href="/providers" className="hover:text-foreground transition-colors">
               Cloud Providers
             </Link>
-          </div>
-
-          <div className="text-xs text-muted-foreground flex items-center gap-1">
-            Built with Next.js, Prisma, Neon & Tailwind
           </div>
         </div>
 
