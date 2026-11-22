@@ -9,7 +9,7 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2d3748?style=flat&logo=prisma)](https://www.prisma.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat&logo=postgresql)](https://www.postgresql.org/)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat&logo=vercel)](https://vercel.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#license-and-acknowledgements)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 * **Live Application:** [https://oneatlas.vercel.app](https://oneatlas.vercel.app) *(or your deployed production URL)*
 * **GitHub Repository:** [https://github.com/Swagat108/OneAtlas](https://github.com/Swagat108/OneAtlas)
@@ -26,13 +26,6 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 - [API Reference](#api-reference)
 - [Data Sources and Methodology](#data-sources-and-methodology)
 - [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [NPM Scripts](#npm-scripts)
-- [Production Deployment](#production-deployment)
-- [Technical Decisions and Trade-offs](#technical-decisions-and-trade-offs)
-- [Testing and Quality Assurance](#testing-and-quality-assurance)
-- [Author](#author)
-- [License and Acknowledgements](#license-and-acknowledgements)
 
 ---
 
@@ -470,153 +463,9 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## Project Structure
-
-```
-OneAtlas/
-├── prisma/
-│   ├── schema.prisma             # Relational PostgreSQL schema definition
-│   ├── seed.ts                   # Reference taxonomy and model database seeder
-│   └── seed-data/                # Baseline metadata (modalities, benchmarks, labs)
-├── public/                       # Static public assets (SVGs, logos, icons)
-├── scripts/                      # Database lifecycle and verification utilities
-│   ├── start-local-db.ts         # Embedded PostgreSQL launcher
-│   └── verify-sources.ts         # External API and dataset probe script
-├── src/
-│   ├── app/                      # Next.js 14 App Router routes and pages
-│   │   ├── api/                  # REST API route handlers
-│   │   │   ├── benchmarks/       # /api/benchmarks endpoints
-│   │   │   ├── filters/          # /api/filters dynamic facets
-│   │   │   ├── home/             # /api/home aggregates
-│   │   │   ├── labs/             # /api/labs directory and profile endpoints
-│   │   │   ├── models/           # /api/models catalog, detail, and compare
-│   │   │   ├── providers/        # /api/providers directory and rate cards
-│   │   │   ├── rankings/         # /api/rankings leaderboards
-│   │   │   └── search/           # /api/search global multi-entity search
-│   │   ├── benchmarks/           # Benchmark listing and detail UI pages
-│   │   ├── compare/              # Comparison matrix page
-│   │   ├── labs/                 # AI lab directory and profile UI pages
-│   │   ├── models/               # Model discovery catalog and detail UI pages
-│   │   ├── providers/            # Cloud provider directory and rate card pages
-│   │   ├── rankings/             # Leaderboards and benchmark rankings UI
-│   │   ├── layout.tsx            # Root layout with fonts, metadata, and providers
-│   │   ├── opengraph-image.tsx   # Edge-rendered dynamic OpenGraph social banner
-│   │   ├── robots.ts             # Search engine crawling directives
-│   │   └── sitemap.ts            # Dynamic sitemap index generator
-│   ├── components/               # Modular UI component hierarchy
-│   │   ├── features/             # Feature-specific components (compare, models, search)
-│   │   ├── layout/               # Shared layout components (Navbar, Footer, MobileNav)
-│   │   └── ui/                   # Reusable primitive design system components
-│   ├── hooks/                    # TanStack Query custom data-fetching hooks
-│   ├── lib/                      # Core utilities (API response wrappers, prisma client)
-│   ├── repositories/             # Direct Prisma database query abstractions
-│   ├── schemas/                  # Zod validation schemas for query parameters
-│   └── services/                 # Business logic and domain transformations
-├── tests/
-│   └── unit/                     # Vitest unit tests (schemas, comparisons, utilities)
-├── docs/                         # Architecture Decision Records and screenshots
-│   ├── DECISIONS.md              # 11 Architecture Decision Records (ADRs)
-│   └── screenshots/              # UI application screenshots
-├── package.json                  # Dependencies and project scripts
-├── vercel.json                   # Vercel deployment and security header configuration
-└── README.md                     # Project documentation
+### 6. Production Build and Test
+```bash
+npm test
+npm run build
 ```
 
----
-
-## NPM Scripts
-
-| Script | Command | Purpose |
-|---|---|---|
-| `npm run dev` | `next dev` | Start local development server with Turbopack/Webpack hot reloading. |
-| `npm run build` | `next build` | Compile optimized production application build. |
-| `npm run start` | `next start` | Start production Node.js server. |
-| `npm run lint` | `next lint` | Run ESLint static analysis across the codebase. |
-| `npm test` | `vitest run` | Execute unit test suite once. |
-| `npm run test:watch` | `vitest` | Run unit tests in interactive watch mode. |
-| `npm run db:generate`| `prisma generate`| Regenerate Prisma TypeScript client from schema. |
-| `npm run db:push` | `prisma db push` | Push schema changes directly to PostgreSQL. |
-| `npm run db:seed` | `tsx prisma/seed.ts` | Seed database with reference models, labs, and benchmarks. |
-| `npm run db:local` | `tsx scripts/start-local-db.ts` | Launch local self-contained embedded PostgreSQL server. |
-| `npm run format` | `prettier --write .` | Format code with Prettier and Tailwind plugin. |
-
----
-
-## Production Deployment
-
-OneAtlas is optimized for zero-configuration deployment on Vercel with Neon Serverless PostgreSQL.
-
-1. **Provision Neon PostgreSQL:**
-   - Create a project on [Neon](https://neon.tech).
-   - Copy the **Pooled Connection** string (port 6543) and **Direct Connection** string (port 5432).
-2. **Deploy Repository on Vercel:**
-   - Import the GitHub repository `https://github.com/Swagat108/OneAtlas`.
-   - Set environment variables in Vercel Project Settings:
-     - `DATABASE_URL`: Your Neon pooled connection string.
-     - `DIRECT_URL`: Your Neon direct connection string.
-     - `NEXT_PUBLIC_APP_URL`: Your production domain (`https://oneatlas.vercel.app`).
-   - The build command is pre-configured via `vercel.json` as `npx prisma generate && next build`.
-3. **Execute Production Schema Push & Seed:**
-   From your local terminal with production connection strings set:
-   ```bash
-   npx prisma db push
-   npx tsx prisma/seed.ts
-   ```
-
----
-
-## Technical Decisions and Trade-offs
-
-Architecture Decision Records (ADRs) are documented in [docs/DECISIONS.md](docs/DECISIONS.md). Key decisions include:
-
-1. **Decoupled 4-Tier Backend Architecture (ADR 001):** Routes $\to$ Schemas $\to$ Services $\to$ Repositories. Enforces separation of concerns and allows 100% unit testing of business logic without spinning up HTTP servers.
-2. **Currency Storage as Decimal(10, 4) (ADR 002):** Fractional token costs (e.g., $0.075 per 1M tokens) are vulnerable to IEEE-754 floating-point inaccuracies. PostgreSQL `Decimal` guarantees exact financial calculations.
-3. **URL Search Parameters as Single Source of Truth (ADR 003):** Catalog filters and sort parameters reside directly in the URL query string. Eliminates state drift, enables bookmarkable search states, and provides native browser history navigation.
-4. **Dual-Connection Neon Configuration (ADR 004):** Serverless Next.js functions use Neon's PgBouncer pooler (`DATABASE_URL` on port 6543) to prevent connection pool exhaustion, while schema migrations utilize the direct port 5432 endpoint (`DIRECT_URL`).
-5. **Two-Dimensional Sticky Table Architecture (ADR 005):** Comparison matrices pin the top header row vertically and the left-most specification column horizontally, preserving model context across multi-model matrix evaluations.
-6. **Known Limitations & Future Roadmap:**
-   - *Live Latency Probing:* Current latency metrics represent measured median TTFT; future iterations will incorporate real-time distributed pingers.
-   - *Community Feedback:* User review submission and fine-tuning recipe sharing are planned for future releases.
-
----
-
-## Testing and Quality Assurance
-
-OneAtlas enforces high engineering standards:
-- **Unit Tests:** Vitest test suites cover comparison algorithms, winner detection, Zod validation schemas, and utility functions.
-  ```bash
-  npm test
-  ```
-- **Type Checking:** Strict TypeScript compilation with zero `any` evasions across API contracts.
-  ```bash
-  npx tsc --noEmit
-  ```
-- **Linting:** ESLint verification enforcing Next.js Core Web Vitals and React hooks best practices.
-  ```bash
-  npm run lint
-  ```
-- **Production Build:** Verified 100% clean compilation across all static and dynamic route handlers.
-  ```bash
-  npm run build
-  ```
-
----
-
-## Author
-
-**Swagat Chougule**
-- GitHub: [@Swagat108](https://github.com/Swagat108)
-- LinkedIn: [linkedin.com/in/swagatchougule](https://linkedin.com) *(Insert your LinkedIn URL)*
-- Email: [swagat@example.com](mailto:swagat@example.com) *(Insert your preferred contact email)*
-
-*This project was developed as a comprehensive engineering demonstration for the Full Stack Engineer role.*
-
----
-
-## License and Acknowledgements
-
-- **License:** Distributed under the MIT License. See `LICENSE` for details.
-- **Data Acknowledgements:** Evaluation data sourced from [OpenRouter](https://openrouter.ai), [Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard), and [LMSYS Chatbot Arena](https://chat.lmsys.org).
-- **Trademarks & Logos:** All company names, brand logos, and trademarks belong to their respective owners (OpenAI, Anthropic, Google, Meta, Mistral, Microsoft, Groq, Together AI).
