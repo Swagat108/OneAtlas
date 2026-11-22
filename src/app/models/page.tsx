@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Search,
@@ -30,6 +30,12 @@ function ModelsCatalogContent() {
 
   // Read URL query values
   const q = searchParams.get("q") ?? "";
+  const [searchInput, setSearchInput] = useState(q);
+
+  useEffect(() => {
+    setSearchInput(q);
+  }, [q]);
+
   const lab = searchParams.get("lab") ?? undefined;
   const provider = searchParams.get("provider") ?? undefined;
   const modelType = searchParams.get("modelType") ?? undefined;
@@ -55,11 +61,22 @@ function ModelsCatalogContent() {
     if (key !== "page") {
       params.delete("page");
     }
-    router.push(`/models?${params.toString()}`);
+    router.replace(`/models?${params.toString()}`, { scroll: false });
   };
 
+  // Debounced search query update
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchInput !== q) {
+        updateQuery("q", searchInput || undefined);
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
   const handleResetFilters = () => {
-    router.push("/models");
+    setSearchInput("");
+    router.replace("/models", { scroll: false });
   };
 
   const models = modelsData?.data ?? [];
@@ -88,14 +105,22 @@ function ModelsCatalogContent() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <input
                 type="text"
-                value={q}
-                onChange={(e) => updateQuery("q", e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    updateQuery("q", searchInput || undefined);
+                  }
+                }}
                 placeholder="Search models..."
                 className="w-full rounded-xl border border-border bg-card pl-11 pr-10 py-2.5 text-sm sm:text-base outline-none focus:border-primary shadow-xs transition-all placeholder:text-muted-foreground/70"
               />
-              {q && (
+              {searchInput && (
                 <button
-                  onClick={() => updateQuery("q", undefined)}
+                  onClick={() => {
+                    setSearchInput("");
+                    updateQuery("q", undefined);
+                  }}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
                 >
                   <X className="h-4 w-4" />
