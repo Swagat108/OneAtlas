@@ -119,6 +119,10 @@ export function BrandLogo({
       resolvedUrl = "/logos/aws-bedrock.svg";
     } else if (rawKey.includes("azure")) {
       resolvedUrl = "/logos/azure-openai.svg";
+    } else if (rawKey.includes("copilot")) {
+      resolvedUrl = "/logos/copilot.svg";
+    } else if (rawKey.includes("microsoft")) {
+      resolvedUrl = "/logos/microsoft.svg";
     }
   }
 

@@ -90,4 +90,13 @@ export const labsData: SeedLab[] = [
     country: "China",
     foundedYear: 2023,
   },
+  {
+    slug: "microsoft",
+    name: "Microsoft",
+    description: "Global computing pioneer and creator of Microsoft Copilot, Azure AI foundation infrastructure, and the Phi small language model series.",
+    website: "https://copilot.microsoft.com",
+    logoUrl: "/logos/microsoft.svg",
+    country: "United States",
+    foundedYear: 1975,
+  },
 ];
