@@ -134,3 +134,22 @@ This document tracks all significant architectural decisions, trade-offs, ration
 - **Trade-offs:**
   - *Pros:* Significantly superior readability, lower cognitive strain, accessible touch targets, and a polished, premium aesthetic.
   - *Cons:* Slightly fewer cards visible in a single viewport before scrolling.
+
+---
+
+## ADR 010: Production Git Branching Strategy & Lifecycle Management
+
+- **Date:** 2026-11-21
+- **Status:** Accepted
+- **Context:**
+  Production-grade enterprise web applications require decoupled, reviewable, and isolated feature development to prevent integration collisions, ensure CI predictability, and support seamless multi-developer collaboration.
+- **Decision:**
+  Adopt a standard GitFlow / GitHub Flow hybrid branching model with:
+  1. `main` as the production release branch.
+  2. `develop` as the continuous integration/staging branch.
+  3. Feature-specific branches (`feature/models-catalog`, `feature/comparison-matrix`, `feature/benchmarks-and-rankings`, `feature/provider-pricing-and-labs`, `feature/search-command-palette`, `feature/brand-logos-and-ui-system`).
+  4. Scoped patch branches (`fix/knowledge-benchmark-scores`).
+  5. Hardened release branches (`release/v1.0.0`) with Semantic Versioning tags (`v1.0.0`).
+- **Trade-offs:**
+  - *Pros:* Clear change isolation, auditable PR history, zero risk to production stability, easy cherry-picking, and alignment with industry best practices (Google, Meta, Vercel).
+  - *Cons:* Requires maintaining branch discipline and synchronizing integration branches.
