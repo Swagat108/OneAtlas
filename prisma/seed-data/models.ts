@@ -1215,5 +1215,35 @@ export const modelsData: SeedModel[] = [
       { benchmarkSlug: "mmmu", score: 71.2, source: "Qwen VL Paper" },
     ],
   },
-
+  // --- MICROSOFT ---
+  {
+    slug: "microsoft-copilot",
+    name: "Microsoft Copilot",
+    labSlug: "microsoft",
+    description: "Microsoft's flagship AI companion and assistant model, combining multimodal intelligence, web grounding, reasoning, and productivity automation across Windows, 365, and Azure.",
+    modelType: ModelType.MULTIMODAL,
+    releaseDate: "2024-10-01T00:00:00Z",
+    contextWindow: 128000,
+    maxOutputTokens: 8192,
+    parameterCount: "Frontier Compound AI",
+    license: LicenseType.PROPRIETARY,
+    status: ModelStatus.ACTIVE,
+    architecture: "Multimodal Foundation Model System",
+    inputModalities: ["text", "image", "audio", "file", "code"],
+    outputModalities: ["text", "audio", "code"],
+    capabilities: ["function-calling", "json-mode", "vision", "reasoning", "streaming", "tool-use", "code-interpreter", "prompt-caching"],
+    providers: [
+      { providerSlug: "azure-openai", inputPricePerMillion: 2.50, outputPricePerMillion: 10.00, latencyMs: 390, throughputTps: 85 },
+    ],
+    scores: [
+      { benchmarkSlug: "arena-elo", score: 1292, source: "LMSYS Chatbot Arena" },
+      { benchmarkSlug: "mmlu-pro", score: 76.8, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "humaneval", score: 86.4, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "math-500", score: 81.5, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "gpqa-diamond", score: 53.2, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "mmmu", score: 65.8, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "ifeval", score: 81.0, source: "Microsoft Research Technical Report" },
+      { benchmarkSlug: "arc-challenge", score: 89.2, source: "Microsoft Research Technical Report" },
+    ],
+  },
 ];

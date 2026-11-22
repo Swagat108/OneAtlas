@@ -19,6 +19,8 @@ Official vector SVG assets are sourced from [`@lobehub/icons`](https://github.co
 | **Cohere** | `cohere` | `/logos/cohere.svg` | `@lobehub/icons` (`Cohere/Color`) | MIT / Cohere Brand Kit |
 | **xAI** | `xai` | `/logos/xai.svg` | `@lobehub/icons` (`Grok/Mono`) | MIT / xAI Press Assets |
 | **Qwen (Alibaba)** | `qwen-alibaba` | `/logos/qwen-alibaba.svg` | `@lobehub/icons` (`Qwen/Color`) | MIT / Alibaba Cloud Brand |
+| **Microsoft** | `microsoft` | `/logos/microsoft.svg` | `@lobehub/icons` (`Microsoft/Color`) | MIT / Microsoft Brand Central |
+| **Microsoft Copilot** | `microsoft-copilot` | `/logos/copilot.svg` | `@lobehub/icons` (`Copilot/Color`) | MIT / Microsoft Copilot Brand |
 
 ---
 
