@@ -463,9 +463,3 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 6. Production Build and Test
-```bash
-npm test
-npm run build
-```
-
