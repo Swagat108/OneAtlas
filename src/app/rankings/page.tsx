@@ -70,24 +70,75 @@ function RankingsContent() {
           </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 border-b border-border/60">
-          {categories.map((cat) => {
-            const active = category === cat.value;
-            return (
-              <button
-                key={cat.label}
-                onClick={() => updateParam("category", cat.value)}
-                className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${
-                  active
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                }`}
+        {/* Category Tabs & Dropdowns */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-border/60">
+          {/* Quick Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+            {categories.map((cat) => {
+              const active = category === cat.value;
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => updateParam("category", cat.value)}
+                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+                    active
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Direct Dropdown Selectors */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Category Dropdown */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="rankings-category-select" className="text-xs font-bold uppercase tracking-wider text-muted-foreground hidden sm:inline">
+                Category:
+              </label>
+              <select
+                id="rankings-category-select"
+                value={category ?? ""}
+                onChange={(e) => updateParam("category", e.target.value || undefined)}
+                className="rounded-xl border border-border bg-card px-3.5 py-2 text-xs sm:text-sm font-semibold outline-none focus:border-primary text-foreground shadow-xs cursor-pointer"
               >
-                {cat.label}
-              </button>
-            );
-          })}
+                <option value="">All Categories</option>
+                <option value="MATH">Mathematics (MATH, GSM8K)</option>
+                <option value="REASONING">Reasoning (Arena Elo, GPQA)</option>
+                <option value="CODING">Coding (HumanEval)</option>
+                <option value="MULTIMODAL">Multimodal (MMMU)</option>
+                <option value="KNOWLEDGE">Knowledge (MMLU-Pro)</option>
+                <option value="AGENTIC">Agentic (SWE-bench)</option>
+              </select>
+            </div>
+
+            {/* Benchmark Dropdown */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="rankings-benchmark-select" className="text-xs font-bold uppercase tracking-wider text-muted-foreground hidden sm:inline">
+                Benchmark:
+              </label>
+              <select
+                id="rankings-benchmark-select"
+                value={benchmark ?? currentBenchmark?.slug ?? ""}
+                onChange={(e) => updateParam("benchmark", e.target.value || undefined)}
+                className="rounded-xl border border-border bg-card px-3.5 py-2 text-xs sm:text-sm font-semibold outline-none focus:border-primary text-foreground shadow-xs cursor-pointer max-w-[200px] truncate"
+              >
+                <option value="mmlu-pro">MMLU-Pro</option>
+                <option value="arena-elo">Chatbot Arena Elo</option>
+                <option value="gsm8k">GSM8K (Math)</option>
+                <option value="math-500">MATH-500 (Math)</option>
+                <option value="humaneval">HumanEval (Coding)</option>
+                <option value="swe-bench-verified">SWE-bench (Agentic)</option>
+                <option value="gpqa-diamond">GPQA Diamond</option>
+                <option value="mmmu">MMMU (Vision)</option>
+                <option value="ifeval">IFEval (Reasoning)</option>
+                <option value="arc-challenge">ARC-Challenge</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Benchmark Info Card */}
