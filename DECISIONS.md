@@ -204,6 +204,10 @@ This document tracks all significant architectural decisions, trade-offs, ration
      - Full WCAG AA contrast compliance across light and dark modes.
 
 
+---
+
+## ADR 014: Mobile UX, Sticky Columns, and Toast Notification Architecture
+
 - **Date:** 2026-11-22
 - **Status:** Accepted
 - **Context:**
@@ -229,3 +233,30 @@ This document tracks all significant architectural decisions, trade-offs, ration
 - **Trade-offs:**
   - *Pros:* Exceptional mobile experience across all viewports (320px to 2560px), zero horizontal page overflow, instant user feedback, zero layout shift (CLS), and an interactive cost calculator that directly assists enterprise AI purchasing decisions.
   - *Cons:* Slightly increased component complexity for tables requiring both sticky positioning and border shadows.
+
+---
+
+## ADR 015: Pull Request Lifecycle, Automated CI Gates & Production Deployment
+
+- **Date:** 2026-11-23
+- **Status:** Accepted
+- **Context:**
+  To guarantee that production (`main`) remains 100% stable, builds cleanly on every Vercel release, and maintains comprehensive test and type coverage across all future feature additions, a formal PR template and GitHub Actions CI workflow are required.
+- **Decision:**
+  1. **Standardized Pull Request Template:**
+     - Created `.github/pull_request_template.md` requiring every proposed change to explicitly document what changed, why, local verification steps, before/after visual proof, database migration status, and a rigorous completion checklist.
+  2. **Automated CI Validation Pipeline:**
+     - Added `.github/workflows/ci.yml` running on Node.js 20 on all PRs targeting `develop` and `main`, executing:
+       - Dependency installation with npm cache restoration
+       - Prisma client generation (`npx prisma generate`)
+       - Static code analysis (`npm run lint`)
+       - TypeScript strict compiler validation (`npx tsc --noEmit`)
+       - Unit test suite execution (`npm run test`)
+       - Production build verification (`npm run build`)
+  3. **Branch Protection & Deployment Flow:**
+     - `main` branch protected from direct pushes and force pushes.
+     - All features and fixes branch from `develop`, pass CI in pull requests, merge to `develop` for integration testing, and deploy to production via approved release PRs to `main`.
+- **Trade-offs:**
+  - *Pros:* Complete audit trail, automated prevention of broken deployments, zero regressions reaching production, and professional engineering hygiene.
+  - *Cons:* Requires running CI workflows before merging.
+
