@@ -70,19 +70,19 @@ export default function HomePage() {
             </p>
 
             {/* Quick Search Bar */}
-            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-2xl mx-auto px-2">
+            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-2xl sm:max-w-3xl mx-auto px-2">
               <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center shadow-xl rounded-2xl overflow-hidden border border-border bg-card/95 backdrop-blur-md p-2 gap-2 focus-within:border-primary transition-all">
-                <div className="flex items-center flex-1 min-w-0 pl-2">
-                  <Search className="h-5 w-5 text-muted-foreground mr-2 shrink-0" />
+                <div className="flex items-center flex-1 min-w-0 pl-3 pr-2">
+                  <Search className="h-5 w-5 text-muted-foreground mr-3 shrink-0" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search 45+ models, labs, or benchmarks (e.g. Claude 3.5, Groq, SWE-bench)..."
-                    className="w-full bg-transparent py-2.5 text-sm sm:text-base outline-none placeholder:text-muted-foreground min-w-0"
+                    placeholder="Search models, labs, or benchmarks (e.g. Claude 3.5, Groq)..."
+                    className="w-full bg-transparent py-2.5 text-sm sm:text-base outline-none placeholder:text-muted-foreground min-w-0 truncate pr-3"
                   />
                 </div>
-                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl justify-center h-11 sm:h-10">
+                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl justify-center h-11 sm:h-10 px-5 font-semibold">
                   Explore
                   <ArrowRight className="h-4 w-4" />
                 </Button>
