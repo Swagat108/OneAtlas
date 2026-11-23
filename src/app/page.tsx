@@ -49,40 +49,40 @@ export default function HomePage() {
 
       <main id="main-content" className="flex-1 pb-24 sm:pb-8">
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-16 pb-14 md:pt-28 md:pb-24 border-b border-border/40">
+        <section className="relative overflow-hidden pt-10 pb-10 md:pt-16 md:pb-16 border-b border-border/40">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.15),rgba(255,255,255,0))]" />
 
-          <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs sm:text-sm font-bold text-primary mb-6 animate-in fade-in">
-              <Sparkles className="h-4 w-4" />
+          <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs sm:text-sm font-semibold text-primary mb-5 animate-in fade-in">
+              <Sparkles className="h-3.5 w-3.5" />
               <span>The Independent AI Model Intelligence Engine</span>
             </div>
 
-            <h1 className="text-3xl font-black tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl">
               Discover, Compare & Evaluate <br />
               <span className="bg-gradient-to-r from-primary via-brand-purple to-brand-cyan bg-clip-text text-transparent">
                 Frontier AI Models
               </span>
             </h1>
 
-            <p className="mt-5 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-muted-foreground leading-relaxed px-2">
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed px-2">
               Real-time benchmarks, multi-provider token pricing, context limits, and latency metrics across OpenAI, Anthropic, Meta, DeepSeek, Google, and Mistral.
             </p>
 
             {/* Quick Search Bar */}
-            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-2xl sm:max-w-3xl mx-auto px-2">
-              <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center shadow-xl rounded-2xl overflow-hidden border border-border bg-card/95 backdrop-blur-md p-2 gap-2 focus-within:border-primary transition-all">
+            <form onSubmit={handleSearchSubmit} className="mt-6 max-w-2xl sm:max-w-2xl mx-auto px-2">
+              <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center shadow-lg rounded-2xl overflow-hidden border border-border bg-card/95 backdrop-blur-md p-1.5 gap-2 focus-within:border-primary transition-all">
                 <div className="flex items-center flex-1 min-w-0 pl-3 pr-2">
-                  <Search className="h-5 w-5 text-muted-foreground mr-3 shrink-0" />
+                  <Search className="h-4 w-4 text-muted-foreground mr-2.5 shrink-0" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search models, labs, or benchmarks (e.g. Claude 3.5, Groq)..."
-                    className="w-full bg-transparent py-2.5 text-sm sm:text-base outline-none placeholder:text-muted-foreground min-w-0 truncate pr-3"
+                    className="w-full bg-transparent py-2 text-sm sm:text-base outline-none placeholder:text-muted-foreground min-w-0 truncate pr-3"
                   />
                 </div>
-                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl justify-center h-11 sm:h-10 px-5 font-semibold">
+                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl justify-center h-10 px-4 font-semibold">
                   Explore
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -90,28 +90,28 @@ export default function HomePage() {
             </form>
 
             {/* Dynamic Stats Counter Strip */}
-            <div className="mt-12 sm:mt-14 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4 max-w-4xl mx-auto">
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-4 sm:p-5 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-foreground">
-                  {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : `${stats.modelsCount}+`}
+            <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4 max-w-3xl mx-auto">
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
+                <div className="text-xl sm:text-3xl font-black text-foreground">
+                  {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.modelsCount}+`}
                 </div>
                 <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Frontier Models</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-4 sm:p-5 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-foreground">
-                  {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : `${stats.labsCount}+`}
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
+                <div className="text-xl sm:text-3xl font-black text-foreground">
+                  {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.labsCount}+`}
                 </div>
                 <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Top AI Labs</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-4 sm:p-5 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-foreground">
-                  {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : `${stats.providersCount}+`}
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
+                <div className="text-xl sm:text-3xl font-black text-foreground">
+                  {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.providersCount}+`}
                 </div>
                 <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Cloud Hosting APIs</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-4 sm:p-5 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-foreground">
-                  {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : `${stats.benchmarksCount}+`}
+              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
+                <div className="text-xl sm:text-3xl font-black text-foreground">
+                  {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.benchmarksCount}+`}
                 </div>
                 <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Verified Benchmarks</div>
               </div>
@@ -120,7 +120,7 @@ export default function HomePage() {
         </section>
 
         {/* Featured Models Spotlight */}
-        <section className="py-16 sm:py-20 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+        <section className="py-12 sm:py-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
             <div>
               <Badge variant="brand" size="md" className="mb-2.5">
@@ -204,8 +204,8 @@ export default function HomePage() {
         </section>
 
         {/* Feature Grid: Discovery, Compare, Leaderboards */}
-        <section className="py-16 sm:py-20 bg-muted/30 border-y border-border/60">
-          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+        <section className="py-12 sm:py-16 bg-muted/30 border-y border-border/60">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
                 Engineered for Modern AI Builders

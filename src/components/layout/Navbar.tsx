@@ -40,8 +40,8 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-2 sm:top-2.5 z-40 w-full px-4 sm:px-6 lg:px-10 transition-all">
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8 rounded-2xl border border-border/80 bg-background/90 backdrop-blur-md shadow-md">
+      <header className="sticky top-2 sm:top-2.5 z-40 w-full px-4 sm:px-6 lg:px-8 transition-all">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 rounded-2xl border border-border/80 bg-background/90 backdrop-blur-md shadow-md">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3 group">

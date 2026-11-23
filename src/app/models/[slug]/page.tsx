@@ -65,7 +65,7 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
     <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main id="main-content" className="flex-1 mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 py-8 w-full pb-24 sm:pb-8">
+      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 sm:pb-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 overflow-x-auto whitespace-nowrap pb-1">
           <Link href="/" className="hover:text-foreground transition-colors">
