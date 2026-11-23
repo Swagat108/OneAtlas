@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ScoreBar } from "@/components/ui/ScoreBar";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { formatCurrency, formatTokenCount } from "@/lib/utils";
+import { formatCurrency, formatTokenCount, cn } from "@/lib/utils";
 import { useRankings } from "@/hooks/use-rankings";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 
