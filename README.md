@@ -11,7 +11,7 @@ Developer-first AI model discovery, intelligence, and comparison platform.
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat&logo=vercel)](https://vercel.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-* **Live Application:** [[https://oneatlas.vercel.app](https://one-atlas-omega.vercel.app/)]
+* **Live Application:** [https://oneatlas.vercel.app](https://one-atlas-omega.vercel.app/)
 * **GitHub Repository:** [https://github.com/Swagat108/OneAtlas](https://github.com/Swagat108/OneAtlas)
 
 ---
