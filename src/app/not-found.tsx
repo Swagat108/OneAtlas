@@ -11,8 +11,34 @@ export default function NotFound() {
       <Navbar />
 
       <main className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive mb-6">
-          <AlertTriangle className="h-8 w-8" />
+        {/* Custom Atlas Celestial Coordinate 404 Illustration */}
+        <div className="relative mb-6 flex h-28 w-28 items-center justify-center" aria-hidden="true">
+          <div className="absolute inset-0 rounded-full bg-primary/15 blur-2xl" />
+          <svg
+            className="relative h-28 w-28 text-muted-foreground/35"
+            viewBox="0 0 100 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Outer dotted orbit */}
+            <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="1" strokeDasharray="3 4" />
+            
+            {/* Tilted celestial coordinate ring */}
+            <ellipse cx="50" cy="50" rx="42" ry="18" stroke="currentColor" strokeWidth="1.2" transform="rotate(-25 50 50)" />
+            <ellipse cx="50" cy="50" rx="42" ry="18" stroke="currentColor" strokeWidth="1.2" transform="rotate(35 50 50)" strokeDasharray="2 3" />
+
+            {/* Central Globe Core */}
+            <circle cx="50" cy="50" r="22" stroke="currentColor" strokeWidth="1.5" className="fill-card/80" />
+            
+            {/* Meridian lines */}
+            <ellipse cx="50" cy="50" rx="10" ry="22" stroke="currentColor" strokeWidth="1" />
+            <line x1="28" y1="50" x2="72" y2="50" stroke="currentColor" strokeWidth="1" />
+
+            {/* Disconnected waypoint beacon */}
+            <circle cx="50" cy="50" r="4" className="fill-primary" />
+            <circle cx="28" cy="22" r="2.5" className="fill-brand-cyan" />
+            <circle cx="72" cy="78" r="2.5" className="fill-brand-purple" />
+          </svg>
         </div>
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
           404: Model or Route Not Found

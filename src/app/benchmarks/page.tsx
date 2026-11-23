@@ -15,7 +15,7 @@ export default function BenchmarksPage() {
     <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 sm:pb-8">
+      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-32 sm:pb-28">
         {isLoading ? (
           <div className="space-y-6">
             <Skeleton className="h-10 w-64 rounded-xl" />

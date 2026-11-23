@@ -15,15 +15,26 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompareTray } from "@/components/features/compare/CompareTray";
+import { LogoMarquee } from "@/components/features/home/LogoMarquee";
 import { useHomeData } from "@/hooks/use-home-data";
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 35 });
   const router = useRouter();
   const { data, isLoading } = useHomeData();
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setSpotlightPos({
+      x: Math.round(((e.clientX - rect.left) / rect.width) * 100),
+      y: Math.round(((e.clientY - rect.top) / rect.height) * 100),
+    });
+  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,29 +60,42 @@ export default function HomePage() {
 
       <main id="main-content" className="flex-1 pb-24 sm:pb-8">
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-10 pb-10 md:pt-16 md:pb-16 border-b border-border/40">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.15),rgba(255,255,255,0))]" />
+        <section
+          onMouseMove={handleMouseMove}
+          className="relative overflow-hidden pt-12 pb-12 md:pt-18 md:pb-18 border-b border-border/40"
+        >
+          {/* Layer 1: Ambient technical grid */}
+          <div className="absolute inset-0 -z-20 bg-grid-pattern opacity-40 mask-radial-fade pointer-events-none" aria-hidden="true" />
+
+          {/* Layer 2: Slow, desktop-only cursor tracking spotlight */}
+          <div
+            className="absolute inset-0 -z-10 pointer-events-none transition-opacity duration-700 opacity-70"
+            style={{
+              background: `radial-gradient(circle 550px at ${spotlightPos.x}% ${spotlightPos.y}%, rgba(99, 102, 241, 0.16), transparent 75%)`,
+            }}
+            aria-hidden="true"
+          />
 
           <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs sm:text-sm font-semibold text-primary mb-5 animate-in fade-in">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3.5 py-1 text-xs sm:text-sm font-semibold text-primary mb-5 shadow-xs backdrop-blur-xs animate-in fade-in">
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
               <span>The Independent AI Model Intelligence Engine</span>
             </div>
 
-            <h1 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-5xl">
               Discover, Compare & Evaluate <br />
               <span className="bg-gradient-to-r from-primary via-brand-purple to-brand-cyan bg-clip-text text-transparent">
                 Frontier AI Models
               </span>
             </h1>
 
-            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed px-2">
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-muted-foreground leading-relaxed px-2">
               Real-time benchmarks, multi-provider token pricing, context limits, and latency metrics across OpenAI, Anthropic, Meta, DeepSeek, Google, and Mistral.
             </p>
 
             {/* Quick Search Bar */}
-            <form onSubmit={handleSearchSubmit} className="mt-6 max-w-2xl sm:max-w-2xl mx-auto px-2">
-              <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center shadow-lg rounded-2xl overflow-hidden border border-border bg-card/95 backdrop-blur-md p-1.5 gap-2 focus-within:border-primary transition-all">
+            <form onSubmit={handleSearchSubmit} className="mt-6 max-w-2xl mx-auto px-2">
+              <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center shadow-xl rounded-2xl overflow-hidden border border-border/80 bg-card/95 backdrop-blur-md p-1.5 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
                 <div className="flex items-center flex-1 min-w-0 pl-3 pr-2">
                   <Search className="h-4 w-4 text-muted-foreground mr-2.5 shrink-0" />
                   <input
@@ -79,10 +103,10 @@ export default function HomePage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search models, labs, or benchmarks (e.g. Claude 3.5, Groq)..."
-                    className="w-full bg-transparent py-2 text-sm sm:text-base outline-none placeholder:text-muted-foreground min-w-0 truncate pr-3"
+                    className="w-full bg-transparent py-2 text-sm outline-none placeholder:text-muted-foreground min-w-0 truncate pr-3"
                   />
                 </div>
-                <Button type="submit" size="md" className="shrink-0 gap-1.5 rounded-xl justify-center h-10 px-4 font-semibold">
+                <Button type="submit" size="md" className="btn-shine shrink-0 gap-1.5 rounded-xl justify-center h-10 px-5 font-bold shadow-md">
                   Explore
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -91,33 +115,36 @@ export default function HomePage() {
 
             {/* Dynamic Stats Counter Strip */}
             <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4 max-w-3xl mx-auto">
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
-                <div className="text-xl sm:text-3xl font-black text-foreground">
+              <div className="rounded-2xl border border-border/70 bg-card/70 backdrop-blur-xs p-3.5 sm:p-4 shadow-2xs hover:border-primary/40 transition-colors">
+                <div className="text-xl sm:text-2xl font-black text-foreground">
                   {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.modelsCount}+`}
                 </div>
-                <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Frontier Models</div>
+                <div className="text-2xs sm:text-xs font-semibold text-muted-foreground mt-1">Frontier Models</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
-                <div className="text-xl sm:text-3xl font-black text-foreground">
+              <div className="rounded-2xl border border-border/70 bg-card/70 backdrop-blur-xs p-3.5 sm:p-4 shadow-2xs hover:border-primary/40 transition-colors">
+                <div className="text-xl sm:text-2xl font-black text-foreground">
                   {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.labsCount}+`}
                 </div>
-                <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Top AI Labs</div>
+                <div className="text-2xs sm:text-xs font-semibold text-muted-foreground mt-1">Top AI Labs</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
-                <div className="text-xl sm:text-3xl font-black text-foreground">
+              <div className="rounded-2xl border border-border/70 bg-card/70 backdrop-blur-xs p-3.5 sm:p-4 shadow-2xs hover:border-primary/40 transition-colors">
+                <div className="text-xl sm:text-2xl font-black text-foreground">
                   {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.providersCount}+`}
                 </div>
-                <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Cloud Hosting APIs</div>
+                <div className="text-2xs sm:text-xs font-semibold text-muted-foreground mt-1">Cloud Hosting APIs</div>
               </div>
-              <div className="rounded-2xl border border-border/80 bg-card/60 p-3 sm:p-4 shadow-xs">
-                <div className="text-xl sm:text-3xl font-black text-foreground">
+              <div className="rounded-2xl border border-border/70 bg-card/70 backdrop-blur-xs p-3.5 sm:p-4 shadow-2xs hover:border-primary/40 transition-colors">
+                <div className="text-xl sm:text-2xl font-black text-foreground">
                   {isLoading ? <Skeleton className="h-8 w-14 mx-auto" /> : `${stats.benchmarksCount}+`}
                 </div>
-                <div className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">Verified Benchmarks</div>
+                <div className="text-2xs sm:text-xs font-semibold text-muted-foreground mt-1">Verified Benchmarks</div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Real Labs & Providers Edge-Faded Logo Marquee */}
+        <LogoMarquee />
 
         {/* Featured Models Spotlight */}
         <section className="py-12 sm:py-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -158,10 +185,15 @@ export default function HomePage() {
                     </div>
                   </div>
                 ))
-              : featuredModels.map((item) => (
+              : featuredModels.map((item, idx) => (
                   <div
                     key={item.slug}
-                    className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-xl"
+                    className={cn(
+                      "group flex flex-col justify-between rounded-2xl border p-5 transition-all hover:border-primary/60 hover:shadow-xl relative",
+                      idx === 0
+                        ? "border-primary/40 shadow-sm ring-1 ring-primary/20 bg-gradient-to-b from-card via-card to-primary/[0.04]"
+                        : "border-border/80 bg-card/90"
+                    )}
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
@@ -204,8 +236,9 @@ export default function HomePage() {
         </section>
 
         {/* Feature Grid: Discovery, Compare, Leaderboards */}
-        <section className="py-12 sm:py-16 bg-muted/30 border-y border-border/60">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="py-12 sm:py-16 bg-muted/20 border-y border-border/50 relative overflow-hidden">
+          <div className="absolute inset-0 bg-dot-pattern opacity-30 mask-radial-fade pointer-events-none" aria-hidden="true" />
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
                 Engineered for Modern AI Builders

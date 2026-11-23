@@ -82,7 +82,7 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                 {model.lab.name}
               </Link>
               <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
-              <span className="font-semibold text-foreground truncate max-w-[200px]">
+              <span className="font-semibold text-foreground" title={model.name}>
                 {model.name}
               </span>
             </>
@@ -97,47 +97,51 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
           </div>
         ) : model ? (
           <div className="space-y-10">
-            {/* Model Header */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-border pb-8">
-              <div className="flex items-start gap-5">
-                <BrandLogo
-                  logoUrl={model.lab.logoUrl}
-                  slug={model.lab.slug}
-                  name={model.name}
-                  size="xl"
-                  className="mt-1 shadow-md"
-                />
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/labs/${model.lab.slug}`}
-                      className="text-sm font-semibold text-primary hover:underline"
-                    >
-                      {model.lab.name}
-                    </Link>
-                    <span className="text-muted-foreground">•</span>
-                    <span
-                      title={formatDate(model.releaseDate)}
-                      className="text-xs text-muted-foreground flex items-center gap-1 cursor-help"
-                    >
-                      <Clock className="h-3 w-3" />
-                      Released {formatRelativeTime(model.releaseDate)}
-                    </span>
-                  </div>
+            {/* Model Header with ambient brand glow and technical grid */}
+            <div className="relative rounded-3xl border border-border/80 bg-card/60 backdrop-blur-xs p-6 sm:p-8 overflow-hidden shadow-xs">
+              <div className="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-primary/12 blur-3xl pointer-events-none" aria-hidden="true" />
+              <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" aria-hidden="true" />
+              
+              <div className="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-6">
+                <div className="flex items-start gap-5">
+                  <BrandLogo
+                    logoUrl={model.lab.logoUrl}
+                    slug={model.lab.slug}
+                    name={model.name}
+                    size="xl"
+                    className="mt-1 shadow-md shrink-0"
+                  />
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/labs/${model.lab.slug}`}
+                        className="text-sm font-semibold text-primary hover:underline"
+                      >
+                        {model.lab.name}
+                      </Link>
+                      <span className="text-muted-foreground">•</span>
+                      <span
+                        title={formatDate(model.releaseDate)}
+                        className="text-xs text-muted-foreground flex items-center gap-1 cursor-help"
+                      >
+                        <Clock className="h-3 w-3" />
+                        Released {formatRelativeTime(model.releaseDate)}
+                      </span>
+                    </div>
 
-                  <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                    {model.name}
-                  </h1>
+                    <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                      {model.name}
+                    </h1>
 
-                  <p className="max-w-3xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {model.description}
-                  </p>
+                    <p className="max-w-3xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      {model.description}
+                    </p>
 
-                  {/* Modalities & Capabilities Pills */}
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    <Badge variant="brand" size="md">
-                      {model.modelType}
-                    </Badge>
+                    {/* Modalities & Capabilities Pills */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Badge variant="brand" size="md">
+                        {model.modelType}
+                      </Badge>
                     {model.parameterCount && (
                       <Badge variant="secondary" size="md">
                         {model.parameterCount}
@@ -178,6 +182,7 @@ export default function ModelDetailPage({ params }: { params: { slug: string } }
                   </a>
                 )}
               </div>
+            </div>
             </div>
 
             {/* Quick Specs Strip with Human Tooltips */}

@@ -68,14 +68,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`} suppressHydrationWarning>
-      <body className="min-h-screen min-h-dvh bg-background font-sans antialiased selection:bg-primary/20 selection:text-primary">
+      <body className="min-h-screen min-h-dvh bg-background font-sans antialiased selection:bg-primary/20 selection:text-primary relative">
+        {/* Subtle global ambient dot pattern */}
+        <div className="fixed inset-0 pointer-events-none bg-dot-pattern opacity-30 z-0 mask-radial-fade" aria-hidden="true" />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-xl focus:shadow-2xl focus:outline-none font-bold text-sm transition-all"
         >
           Skip to main content
         </a>
-        <AppProviders>{children}</AppProviders>
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <AppProviders>{children}</AppProviders>
+        </div>
       </body>
     </html>
   );

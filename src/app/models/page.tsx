@@ -138,7 +138,7 @@ function ModelsCatalogContent() {
     <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 sm:pb-8">
+      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-32 sm:pb-28">
         {/* Page Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-border">
           <div>

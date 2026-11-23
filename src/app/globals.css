@@ -24,6 +24,8 @@
     --input: 220 13% 89%;
     --ring: 243 75% 59%;
     --radius: 0.625rem;
+    --dot-color: 15, 23, 42;
+    --grid-color: 15, 23, 42;
   }
 
   .dark {
@@ -46,6 +48,8 @@
     --border: 217 33% 16%;
     --input: 217 33% 16%;
     --ring: 239 84% 67%;
+    --dot-color: 255, 255, 255;
+    --grid-color: 255, 255, 255;
   }
 
   * {
@@ -53,7 +57,7 @@
   }
 
   html {
-    font-size: 15px;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -89,4 +93,99 @@
   background: hsl(var(--card) / 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Background patterns */
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(var(--dot-color), 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(var(--grid-color), 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--grid-color), 0.05) 1px, transparent 1px);
+}
+
+/* Mask utilities for seamless fading */
+.mask-radial-fade {
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+.mask-top-fade {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.mask-edge-fade {
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+/* Micro-noise overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Hairline gradient divider */
+.divider-hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right, transparent, hsl(var(--border) / 0.8), transparent);
+}
+
+/* Primary CTA hover sheen sweep */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%) rotate(45deg);
+  pointer-events-none;
+  transition: transform 0.6s ease;
+}
+
+.btn-shine:hover::after {
+  transform: translateX(100%) rotate(45deg);
+}
+
+/* Infinite GPU-accelerated Logo Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+    transform: none;
+  }
+  .btn-shine::after {
+    display: none;
+  }
 }

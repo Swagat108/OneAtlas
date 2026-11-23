@@ -6,7 +6,7 @@ import { Trophy, X, Share2, CheckCheck, Sparkles, ExternalLink, Zap, DollarSign,
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { formatCurrency, formatTokenCount, formatScore } from "@/lib/utils";
+import { formatCurrency, formatTokenCount, formatScore, cn } from "@/lib/utils";
 import { useCompareTray } from "@/hooks/use-compare-tray";
 import { useToast } from "@/context/toast.context";
 
@@ -160,7 +160,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
               {models.map((m) => {
                 const isWinner = winners.cheapestModelSlug === m.slug;
                 return (
-                  <td key={m.slug} className="p-4">
+                  <td key={m.slug} className={cn("p-4 transition-colors", isWinner && "bg-emerald-500/[0.04]")}>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-sm text-foreground">
                         {m.minInputPrice !== null ? formatCurrency(m.minInputPrice) : "Free"}
@@ -184,7 +184,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
               {models.map((m) => {
                 const isWinner = winners.largestContextSlug === m.slug;
                 return (
-                  <td key={m.slug} className="p-4">
+                  <td key={m.slug} className={cn("p-4 transition-colors", isWinner && "bg-emerald-500/[0.04]")}>
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-foreground">
                         {formatTokenCount(m.contextWindow)} tokens
@@ -279,7 +279,7 @@ export function ComparisonMatrix({ data }: ComparisonMatrixProps) {
                   const score = row.scores[m.slug];
                   const isWinner = row.winningModelSlug === m.slug;
                   return (
-                    <td key={m.slug} className="p-4">
+                    <td key={m.slug} className={cn("p-4 transition-colors", isWinner && "bg-emerald-500/[0.04]")}>
                       {score !== null ? (
                         <div className="flex items-center gap-2">
                           <span

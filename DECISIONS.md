@@ -156,7 +156,53 @@ This document tracks all significant architectural decisions, trade-offs, ration
 
 ---
 
-## ADR 011: Responsive Mobile-First Architecture, Feedback Toast System, and Human-Centric UI/UX Decisions
+## ADR 012: Sizing, Scale Normalization & Information Completeness
+
+- **Date:** 2026-11-23
+- **Status:** Accepted
+- **Context:**
+  On standard desktop displays (1366px, 1440px, 1920px) and laptops using Windows display scaling (125%–150%), the UI previously appeared overly magnified due to inflated custom Tailwind font sizes (17px base, 54px 5xl) and 1600px container widths. Furthermore, long model names and descriptions were truncated without full-text tooltips, and the Compare Tray overflowed silently when 3–4 models were selected.
+- **Decision:**
+  1. **Normalize Design Tokens:** Replaced oversized tokens in `tailwind.config.ts` and `globals.css` with industry-standard production scales (`base: 16px`, `sm: 14px`, `xs: 12px`, `html: 16px`).
+  2. **Container Standards:** Normalized all main layout containers to `max-w-7xl` (1280px) with responsive side padding (`px-4 sm:px-6 lg:px-8`).
+  3. **Compare Tray Overhaul:**
+     - Enabled multi-row wrapping so all 1–4 selected models are visible simultaneously, matching the "(N/4)" counter.
+     - Added an expandable detail sheet allowing users to view complete model names, labs, pricing, and remove actions in full rows.
+     - Enforced `title` attributes on all model chips, provider lists, and table cells to guarantee zero data clipping.
+     - Increased page bottom padding (`pb-32 sm:pb-28`) so the fixed tray never occludes page content.
+- **Trade-offs:**
+  - *Pros:* Sleek, proportional, developer-tool aesthetic matching Stripe, Linear, and Vercel; complete information accessibility.
+  - *Cons:* Slightly denser information display.
+
+---
+
+## ADR 013: Visual Design System, Background Effects & Accessibility Safeguards
+
+- **Date:** 2026-11-23
+- **Status:** Accepted
+- **Context:**
+  Large flat surfaces in light and dark mode felt sterile and lacked spatial layering. Atmospheric background visuals were needed to elevate the product experience while maintaining strict performance, accessibility, and contrast standards.
+- **Decision:**
+  1. **Pure CSS & Inline SVG Backgrounds:**
+     - Added a subtle global ambient dot pattern (`16px x 16px`) with radial fade mask.
+     - Integrated a desktop-only cursor-following spotlight on the homepage Hero using GPU-accelerated CSS variables.
+     - Added a technical micro-noise overlay (`feTurbulence`) for tactile depth.
+     - Replaced blunt borders with hairline gradient dividers (`from-transparent via-border to-transparent`).
+  2. **Logo Marquee:**
+     - Created an infinite, GPU-accelerated marquee component showcasing official partner logos with left/right linear gradient fade masks.
+     - Pausable on hover, static grid fallback for `prefers-reduced-motion`.
+  3. **Detail & Data Accents:**
+     - Header ambient brand glow derived from lab brand colors.
+     - Multi-stop gradient benchmark score bars with smooth width transitions.
+     - Subtle highlight bands behind winning comparison cells and top-3 leaderboard rows.
+  4. **Original Line-Art SVG Illustrations:**
+     - Custom Atlas navigation compass radar motif for empty states.
+     - Celestial coordinate orbit motif for 404 pages.
+  5. **Performance & Contrast Safeguards:**
+     - All decorative elements flagged with `aria-hidden="true"`.
+     - Zero WebGL or external raster weight (< 15KB total code addition).
+     - Full WCAG AA contrast compliance across light and dark modes.
+
 
 - **Date:** 2026-11-22
 - **Status:** Accepted

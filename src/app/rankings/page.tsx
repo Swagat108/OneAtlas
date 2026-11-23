@@ -56,7 +56,7 @@ function RankingsContent() {
     <div className="min-h-screen min-h-dvh flex flex-col bg-background">
       <Navbar />
 
-      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 sm:pb-8">
+      <main id="main-content" className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 w-full pb-32 sm:pb-28">
         {/* Header */}
         <div className="pb-8 border-b border-border mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs sm:text-sm font-bold text-primary mb-3">
@@ -167,7 +167,19 @@ function RankingsContent() {
                     const isTop3 = item.rank <= 3;
 
                     return (
-                      <tr key={item.model.slug} className="hover:bg-muted/20">
+                      <tr
+                        key={item.model.slug}
+                        className={cn(
+                          "transition-colors",
+                          item.rank === 1
+                            ? "bg-amber-500/[0.05] hover:bg-amber-500/[0.09]"
+                            : item.rank === 2
+                            ? "bg-slate-400/[0.04] hover:bg-slate-400/[0.08]"
+                            : item.rank === 3
+                            ? "bg-amber-700/[0.04] hover:bg-amber-700/[0.08]"
+                            : "hover:bg-muted/20"
+                        )}
+                      >
                         {/* Rank */}
                         <td className="sticky left-0 bg-card z-10 p-4 text-center font-bold">
                           {item.rank === 1 ? (

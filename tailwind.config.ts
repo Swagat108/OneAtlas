@@ -68,16 +68,16 @@ const config: Config = {
         mono: ["var(--font-mono)", "monospace"],
       },
       fontSize: {
-        "2xs": ["0.75rem", { lineHeight: "1.1rem" }], // 12px
-        xs: ["0.84rem", { lineHeight: "1.3rem" }], // ~13.5px
-        sm: ["0.95rem", { lineHeight: "1.45rem" }], // ~15.2px
-        base: ["1.0625rem", { lineHeight: "1.65rem" }], // 17px
-        lg: ["1.2rem", { lineHeight: "1.75rem" }], // ~19.2px
-        xl: ["1.35rem", { lineHeight: "1.9rem" }], // ~21.6px
-        "2xl": ["1.65rem", { lineHeight: "2.15rem" }], // ~26.4px
-        "3xl": ["2.05rem", { lineHeight: "2.55rem" }], // ~32.8px
-        "4xl": ["2.6rem", { lineHeight: "3.1rem" }], // ~41.6px
-        "5xl": ["3.4rem", { lineHeight: "3.8rem" }], // ~54.4px
+        "2xs": ["0.6875rem", { lineHeight: "1rem" }], // 11px
+        xs: ["0.75rem", { lineHeight: "1.125rem" }], // 12px
+        sm: ["0.875rem", { lineHeight: "1.25rem" }], // 14px (dense UI, tables, badges)
+        base: ["1rem", { lineHeight: "1.5rem" }], // 16px (reading text, inputs)
+        lg: ["1.125rem", { lineHeight: "1.75rem" }], // 18px
+        xl: ["1.25rem", { lineHeight: "1.75rem" }], // 20px (card titles)
+        "2xl": ["1.5rem", { lineHeight: "2rem" }], // 24px (section headers)
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px (page titles)
+        "4xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px
+        "5xl": ["3rem", { lineHeight: "1.1" }], // 48px (hero title desktop)
       },
     },
   },

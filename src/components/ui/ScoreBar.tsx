@@ -21,10 +21,10 @@ export function ScoreBar({
   const percentage = Math.min(100, Math.max(0, (score / maxScore) * 100));
 
   const colors = {
-    blue: "bg-primary",
-    emerald: "bg-emerald-500",
-    purple: "bg-purple-500",
-    amber: "bg-amber-500",
+    blue: "bg-gradient-to-r from-primary to-brand-cyan shadow-xs",
+    emerald: "bg-gradient-to-r from-emerald-500 to-teal-400 shadow-xs",
+    purple: "bg-gradient-to-r from-purple-500 to-indigo-400 shadow-xs",
+    amber: "bg-gradient-to-r from-amber-500 to-orange-400 shadow-xs",
   };
 
   return (
